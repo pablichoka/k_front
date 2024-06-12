@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:k_front/controller/api_auth_controller.dart';
+import 'package:k_front/controller/impl/api_auth_controller_impl.dart';
 import 'package:k_front/forms/signup.dart';
-import 'package:k_front/controller/api_controller.dart' as api;
 
 import '../../models/logged_user.dart';
 import '../../pages/dashboard.dart';
 import '../../themes/theme_data.dart';
-import '../../widgets/common/app_bar.dart';
-import '../../widgets/desktop/background_index.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({super.key});
@@ -26,6 +25,7 @@ class LoginFormState extends State<LoginForm> {
     password: '',
   );
   late bool _rememberMe = false;
+  final ApiAuthController _apiAuth = ApiAuthControllerImpl();
 
   TextFormField buildTextField(
       {required String hintText,
@@ -55,7 +55,7 @@ class LoginFormState extends State<LoginForm> {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
       try {
-        return await api.ApiController()
+        return await _apiAuth
             .login(_newLoggedUser.username, _newLoggedUser.password);
       } catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(

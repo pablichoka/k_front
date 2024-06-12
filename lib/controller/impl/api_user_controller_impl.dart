@@ -1,12 +1,11 @@
 import 'dart:convert';
 
-import 'package:k_front/controller/api_user_controller.dart';
 import 'package:http/http.dart' as http;
+import 'package:k_front/controller/api_user_controller.dart';
 
-import '../../main.dart';
 import '../../models/user.dart';
 
-class ApiUserServiceImpl implements ApiUserController {
+class ApiUserControllerImpl implements ApiUserController {
   final String _baseUrl = 'http://localhost:8081';
 
   @override

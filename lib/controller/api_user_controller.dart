@@ -1,6 +1,6 @@
 import 'package:k_front/models/user.dart';
 
-abstract class ApiController {
+abstract class ApiUserController {
 
   // Future<bool> login(String username, String password);
 

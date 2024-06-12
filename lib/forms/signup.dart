@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:k_front/models/user.dart';
 import 'package:k_front/pages/index.dart';
-import 'package:k_front/services/api_service.dart' as api;
+import 'package:k_front/controller/api_user_controller.dart';
 
-import '../services/phone_validator.dart';
+import '../controller/impl/api_user_controller_impl.dart';
+import '../utils/phone_validator.dart';
 import '../themes/theme_data.dart';
 import '../widgets/common/app_bar.dart';
 import '../widgets/desktop/background_index.dart';
@@ -29,6 +30,8 @@ class SignUpPageState extends State<SignUpPage> {
     mobile: '',
     role: 'USER',
   );
+
+  ApiUserController apiUser = ApiUserControllerImpl();
 
   TextFormField buildTextField(
       {required String hintText,
@@ -82,7 +85,7 @@ class SignUpPageState extends State<SignUpPage> {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
       try {
-        return await api.ApiService.instance.signup(newUser);
+        return await apiUser.signup(newUser);
       } catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(

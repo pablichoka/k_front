@@ -1,11 +1,13 @@
-import 'package:flutter/material.dart';
-import 'package:k_front/services/api_service.dart' as api;
-import 'package:sidebarx/sidebarx.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:flutter/material.dart';
+import 'package:k_front/controller/impl/api_auth_controller_impl.dart';
+import 'package:sidebarx/sidebarx.dart';
 
-import '../../main.dart';
+import '../../controller/api_auth_controller.dart';
 import '../../themes/desktop/sidebar_theme.dart';
 import '../../themes/theme_data.dart';
+
+ApiAuthController apiUser = ApiAuthControllerImpl();
 
 SidebarX dashboardSidebar(
     BuildContext context,
@@ -22,7 +24,7 @@ SidebarX dashboardSidebar(
     footerDivider: IconButton(
       onPressed: () async {
         Navigator.of(context).pop();
-        await api.ApiService.instance.logout(storage.read(key: 'accessToken'));
+        await apiUser.logout();
       },
       style: ButtonStyle(
         iconColor: WidgetStateProperty.all(white),

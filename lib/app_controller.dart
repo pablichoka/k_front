@@ -4,9 +4,8 @@ import 'package:flutter/services.dart';
 import 'package:k_front/pages/index.dart';
 import 'package:k_front/themes/theme_provider.dart';
 import 'package:k_front/themes/theme_data.dart';
+import 'package:k_front/utils/device_checker.dart';
 import 'package:provider/provider.dart';
-
-import '../assets/constants.dart';
 
 final ThemeData _kCalControlLightTheme = buildKCalControlLightTheme();
 final ThemeData _kCalControlDarkTheme = buildKCalControlDarkTheme();

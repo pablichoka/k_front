@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:k_front/controller/impl/api_auth_controller_impl.dart';
+import 'package:k_front/controller/api_auth_controller.dart';
 import 'package:k_front/forms/signup.dart';
-import 'package:k_front/controller/api_controller.dart';
 
 import '../../models/logged_user.dart';
 import '../../pages/dashboard.dart';
@@ -26,6 +27,8 @@ class LoginPageState extends State<LoginPage> {
     password: '',
   );
   late bool _rememberMe = false;
+
+  ApiAuthController apiUser = ApiAuthControllerImpl();
 
   TextFormField buildTextField(
       {required String hintText,
@@ -55,7 +58,7 @@ class LoginPageState extends State<LoginPage> {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
       try {
-        return await ApiController()
+        return await apiUser
             .login(_newLoggedUser.username, _newLoggedUser.password);
       } catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(
