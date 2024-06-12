@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:k_front/pages/index.dart';
-import 'package:k_front/services/theme_provider.dart';
+import 'package:k_front/themes/theme_provider.dart';
 import 'package:k_front/themes/theme_data.dart';
 import 'package:provider/provider.dart';
 

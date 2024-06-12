@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:k_front/forms/signup.dart';
-import 'package:k_front/services/api_service.dart' as api;
+import 'package:k_front/controller/api_controller.dart' as api;
 
 import '../../models/logged_user.dart';
 import '../../pages/dashboard.dart';
@@ -55,7 +55,7 @@ class LoginFormState extends State<LoginForm> {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
       try {
-        return await api.ApiService.instance
+        return await api.ApiController()
             .login(_newLoggedUser.username, _newLoggedUser.password);
       } catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(
