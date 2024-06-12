@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:k_front/controller/impl/api_auth_controller_impl.dart';
+import 'package:k_front/controller/api_auth_controller.dart';
 import 'package:k_front/forms/signup.dart';
-import 'package:k_front/services/api_service.dart' as api;
 
 import '../../models/logged_user.dart';
 import '../../pages/dashboard.dart';
@@ -21,11 +22,13 @@ class LoginPageState extends State<LoginPage> {
   final String title = "kCal Control";
   final FocusScopeNode _focusNode = FocusScopeNode();
   BuildContext? _navigationContext;
-  var _newLoggedUser = LoggedUser(
+  final _newLoggedUser = LoggedUser(
     username: '',
     password: '',
   );
   late bool _rememberMe = false;
+
+  ApiAuthController apiUser = ApiAuthControllerImpl();
 
   TextFormField buildTextField(
       {required String hintText,
@@ -55,7 +58,7 @@ class LoginPageState extends State<LoginPage> {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
       try {
-        return await api.ApiService.instance
+        return await apiUser
             .login(_newLoggedUser.username, _newLoggedUser.password);
       } catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(

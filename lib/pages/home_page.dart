@@ -5,10 +5,10 @@ class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
   @override
-  _HomePage createState() => _HomePage();
+  HomePageBuilder createState() => HomePageBuilder();
 }
 
-class _HomePage extends State<HomePage> {
+class HomePageBuilder extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

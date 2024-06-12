@@ -4,10 +4,10 @@ class MenuBuilder extends StatefulWidget {
   const MenuBuilder({Key? key}) : super(key: key);
 
   @override
-  _MenuBuilder createState() => _MenuBuilder();
+  MenuBuilderBuilder createState() => MenuBuilderBuilder();
 }
 
-class _MenuBuilder extends State<MenuBuilder>{
+class MenuBuilderBuilder extends State<MenuBuilder>{
   @override
   Widget build(BuildContext context){
     return const Scaffold(restorationId: 'Aye');

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:k_front/pages/desktop/index.dart';
 
-import '../services/api_service.dart' as api;
+import '../controller/impl/api_user_controller_impl.dart';
+import '../controller/api_user_controller.dart';
 import 'mobile/index.dart';
 
 class WebIndex extends StatefulWidget {
@@ -18,22 +19,23 @@ class _WebIndexState extends State<WebIndex> {
   @override
   void initState() {
     super.initState();
-    loadWelcomeText();
+    // loadWelcomeText();
   }
 
-  Future<void> loadWelcomeText() async {
-    var apiService = api.ApiService.instance;
-    try {
-      var response = await apiService.getNoAuth('/index');
-      setState(() {
-        welcomeText = response['message'];
-      });
-    } catch (e) {
-      setState(() {
-        welcomeText = 'Connection failed';
-      });
-    }
-  }
+  ApiUserController apiUser = ApiUserControllerImpl();
+
+  // Future<void> loadWelcomeText() async {
+  //   try {
+  //     var response = await apiUser.getNoAuth('/index');
+  //     setState(() {
+  //       welcomeText = response['message'];
+  //     });
+  //   } catch (e) {
+  //     setState(() {
+  //       welcomeText = 'Connection failed';
+  //     });
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {

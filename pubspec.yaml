@@ -29,7 +29,6 @@ dependencies:
   material_theme_builder: ^1.0.4
   infinite_carousel: ^1.1.1
   intl_phone_number_input: ^0.7.4
-  intl_phone_field2: ^3.3.4
   libphonenumber: ^2.0.2
 
 dev_dependencies:
