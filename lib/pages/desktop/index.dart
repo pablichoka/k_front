@@ -61,13 +61,14 @@ Scaffold desktopIndex(BuildContext context) {
           children: [
             Padding(
               padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.02),
-              child: Column(
+              child:
+              Column(
                 children: <Widget>[
                   Center(
                     child: SizedBox(
                         width: !isDesktop(context)
                             ? MediaQuery.of(context).size.width * 0.96
-                            : MediaQuery.of(context).size.width * 0.60,
+                            : MediaQuery.of(context).size.width * 0.65,
                         height: MediaQuery.of(context).size.height * 0.20,
                         child: Center(
                           child: Text('Welcome to kCal Control',
@@ -78,7 +79,7 @@ Scaffold desktopIndex(BuildContext context) {
                     child: SizedBox(
                         width: !isDesktop(context)
                             ? MediaQuery.of(context).size.width * 0.96
-                            : MediaQuery.of(context).size.width * 0.6,
+                            : MediaQuery.of(context).size.width * 0.65,
                         height: MediaQuery.of(context).size.height * 0.40,
                         child: IndexDesktopCarousel(context)),
                   )
@@ -89,14 +90,16 @@ Scaffold desktopIndex(BuildContext context) {
                 ? Padding(
                     padding: EdgeInsets.all(
                         MediaQuery.of(context).size.width * 0.02),
-                    child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: Colors.transparent,
-                        ),
-                        width: MediaQuery.of(context).size.width * 0.30,
-                        height: MediaQuery.of(context).size.height * 0.60,
-                        child: const LoginForm()),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: Container(
+                          decoration: BoxDecoration(
+                            color: Theme.of(context).primaryColor,
+                          ),
+                          width: MediaQuery.of(context).size.width * 0.25,
+                          height: 475,
+                          child: const LoginForm()),
+                    ),
                   )
                 : const SizedBox(),
           ],
