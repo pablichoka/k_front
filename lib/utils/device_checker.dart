@@ -17,7 +17,6 @@ bool isDesktop(BuildContext context) {
 bool isTablet(BuildContext context) {
   final MediaQueryData mediaQuery = MediaQuery.of(context);
   final double deviceWidthDp = mediaQuery.size.width / mediaQuery.devicePixelRatio;
-print(deviceWidthDp);
   if (deviceWidthDp >= _tabletBreakpoint && deviceWidthDp < _desktopBreakpoint) {
     return true;
   } else {

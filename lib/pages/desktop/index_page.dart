@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:k_front/pages/desktop/login_form.dart';
 
 import '../mobile/login_form.dart';
-import 'signup.dart';
+import 'signup_form.dart';
 import '../../themes/theme_data.dart';
 import '../../utils/device_checker.dart';
 import '../../widgets/common/app_bar.dart';

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:k_front/pages/desktop/index.dart';
+import 'package:k_front/pages/desktop/index_page.dart';
 
 import '../controller/impl/api_user_controller_impl.dart';
 import '../controller/api_user_controller.dart';
-import 'mobile/index.dart';
+import '../pages/mobile/index_page.dart';
+import '../utils/device_checker.dart';
 
 class WebIndex extends StatefulWidget {
   const WebIndex({super.key});
@@ -39,8 +40,10 @@ class _WebIndexState extends State<WebIndex> {
 
   @override
   Widget build(BuildContext context) {
-    return MediaQuery.of(context).size.width > 600
+    return isDesktop(context)
         ? desktopIndex(context)
-        : mobileIndex(context);
+        : isTablet(context)
+            ? desktopIndex(context)
+            : mobileIndex(context);
   }
 }

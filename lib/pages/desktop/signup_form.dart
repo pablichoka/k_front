@@ -9,6 +9,7 @@ import '../../utils/phone_validator.dart';
 import '../../themes/theme_data.dart';
 import '../../widgets/common/app_bar.dart';
 import '../../widgets/desktop/background_index.dart';
+import '../../widgets/phone_selector.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
@@ -115,14 +116,14 @@ class SignUpPageState extends State<SignUpPage> {
         Center(
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 24.0),
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height,
+            width: 500,
             child: SingleChildScrollView(
               child: Flex(
                 mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 direction: Axis.vertical,
                 children: <Widget>[
-                  SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                  const SizedBox(height: 25),
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 24.0),
                     decoration: kContainerDecoration.copyWith(
@@ -132,135 +133,13 @@ class SignUpPageState extends State<SignUpPage> {
                       key: _formKey,
                       child: Column(
                         children: <Widget>[
-                          SizedBox(
-                              height:
-                                  MediaQuery.of(context).size.height * 0.02),
-                          const Text(
-                            'Welcome!',
-                            style: TextStyle(
-                              fontSize: 24,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          SizedBox(
-                              height:
-                                  MediaQuery.of(context).size.height * 0.01),
-                          const Text(
-                            'Provide the required data to get your access',
-                            style: TextStyle(fontSize: 16),
-                          ),
-                          SizedBox(
-                              height:
-                                  MediaQuery.of(context).size.height * 0.02),
-                          buildTextField(
-                            hintText: 'Username',
-                            icon: Icons.alternate_email,
-                            field: 'username',
-                          ),
-                          SizedBox(
-                              height:
-                                  MediaQuery.of(context).size.height * 0.02),
-                          buildTextField(
-                            hintText: 'Email or username',
-                            icon: Icons.email,
-                            field: 'email',
-                          ),
-                          SizedBox(
-                              height:
-                                  MediaQuery.of(context).size.height * 0.02),
-                          buildTextField(
-                              hintText: 'First name',
-                              icon: Icons.person,
-                              field: 'firstName'),
-                          SizedBox(
-                              height:
-                                  MediaQuery.of(context).size.height * 0.02),
-                          buildTextField(
-                              hintText: 'Last name',
-                              icon: Icons.person,
-                              field: 'lastName'),
-                          SizedBox(
-                              height:
-                                  MediaQuery.of(context).size.height * 0.02),
-                          buildTextField(
-                            hintText: 'Password',
-                            icon: Icons.lock,
-                            obscureText: true,
-                            field: 'password',
-                          ),
-                          SizedBox(
-                              height:
-                                  MediaQuery.of(context).size.height * 0.02),
-                          InternationalPhoneNumberInput(
-                            onInputChanged: (PhoneNumber number) {
-                              _number = number;
-                            },
-                            validator: (value) {
-                              if (validatePhoneNumber(
-                                  phoneNumber: value!,
-                                  isoCode: _number.isoCode!)) {
-                                return null;
-                              } else {
-                                return 'Enter a valid phone number';
-                              }
-                            },
-                            selectorConfig: const SelectorConfig(
-                              selectorType: PhoneInputSelectorType.BOTTOM_SHEET,
-                              useBottomSheetSafeArea: true,
-                              showFlags: true,
-                              trailingSpace: true,
-                            ),
-                            ignoreBlank: true,
-                            inputDecoration: InputDecoration(
-                              labelText: 'Phone number',
-                              prefixIcon: const Icon(Icons.phone),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10.0),
-                              ),
-                            ),
-                            autoValidateMode:
-                                AutovalidateMode.onUserInteraction,
-                            selectorTextStyle: TextStyle(
-                                color: Theme.of(context)
-                                    .textTheme
-                                    .displaySmall
-                                    ?.color),
-                            initialValue: _number,
-                            textFieldController: _phoneController,
-                            formatInput: false,
-                            keyboardType: const TextInputType.numberWithOptions(
-                                signed: true, decimal: false),
-                            inputBorder: const OutlineInputBorder(),
-                            onSaved: (PhoneNumber number) {
-                              newUser.mobile = number.phoneNumber!;
-                            },
-                          ),
-                          SizedBox(
-                              height:
-                                  MediaQuery.of(context).size.height * 0.02),
+                          formBody(), //form fields
                           ElevatedButton(
                             onPressed: () async {
                               await _signup()
-                                  ? Navigator.pushReplacement(
+                                  ? Navigator.popAndPushNamed(
                                       _navigationContext!,
-                                      PageRouteBuilder(
-                                        pageBuilder:
-                                            (context, animation1, animation2) =>
-                                                const WebIndex(),
-                                        transitionDuration:
-                                            const Duration(milliseconds: 200),
-                                        transitionsBuilder: (context, animation,
-                                            animation2, child) {
-                                          final offsetAnimation = Tween<Offset>(
-                                            begin: const Offset(1.0, 0.0),
-                                            end: Offset.zero,
-                                          ).animate(animation);
-                                          return SlideTransition(
-                                            position: offsetAnimation,
-                                            child: child,
-                                          );
-                                        },
-                                      ),
+                                      '/',
                                     )
                                   : null;
                             },
@@ -273,9 +152,7 @@ class SignUpPageState extends State<SignUpPage> {
                             ),
                             child: const Text('Sign up'),
                           ),
-                          SizedBox(
-                              height:
-                                  MediaQuery.of(context).size.height * 0.02),
+                          const SizedBox(height: 25),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
@@ -296,13 +173,12 @@ class SignUpPageState extends State<SignUpPage> {
                               ),
                             ],
                           ),
-                          SizedBox(
-                              height:
-                                  MediaQuery.of(context).size.height * 0.02),
+                          const SizedBox(height: 25),
                         ],
                       ),
                     ),
                   ),
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.12),
                 ],
               ),
             ),
@@ -311,6 +187,55 @@ class SignUpPageState extends State<SignUpPage> {
       ]),
       floatingActionButton: themeSelectorButton(context),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+    );
+  }
+
+  Column formBody() {
+    return Column(
+      children: [
+        SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+        const Text(
+          'Welcome!',
+          style: TextStyle(
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        SizedBox(height: MediaQuery.of(context).size.height * 0.01),
+        const Text(
+          'Provide the required data to get your access',
+          style: TextStyle(fontSize: 16),
+        ),
+        SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+        buildTextField(
+          hintText: 'Username',
+          icon: Icons.alternate_email,
+          field: 'username',
+        ),
+        const SizedBox(height: 25),
+        buildTextField(
+          hintText: 'Email or username',
+          icon: Icons.email,
+          field: 'email',
+        ),
+        const SizedBox(height: 25),
+        buildTextField(
+            hintText: 'First name', icon: Icons.person, field: 'firstName'),
+        const SizedBox(height: 25),
+        buildTextField(
+            hintText: 'Last name', icon: Icons.person, field: 'lastName'),
+        const SizedBox(height: 25),
+        buildTextField(
+          hintText: 'Password',
+          icon: Icons.lock,
+          obscureText: true,
+          field: 'password',
+        ),
+        const SizedBox(height: 25),
+        internationalPhoneNumberInput(
+            _number, context, _phoneController, newUser),
+        const SizedBox(height: 25),
+      ],
     );
   }
 }

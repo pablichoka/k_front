@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:k_front/controller/api_auth_controller.dart';
 import 'package:k_front/controller/impl/api_auth_controller_impl.dart';
-import 'package:k_front/forms/signup.dart';
 
 import '../../models/logged_user.dart';
-import '../../pages/dashboard.dart';
 import '../../themes/theme_data.dart';
+import '../../routes/dashboard.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({super.key});
