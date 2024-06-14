@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:k_front/models/user.dart';
-import 'package:k_front/pages/index.dart';
+import 'package:k_front/routes/index.dart';
 import 'package:k_front/controller/api_user_controller.dart';
 
-import '../controller/impl/api_user_controller_impl.dart';
-import '../utils/phone_validator.dart';
-import '../themes/theme_data.dart';
-import '../widgets/common/app_bar.dart';
-import '../widgets/desktop/background_index.dart';
+import '../../controller/impl/api_user_controller_impl.dart';
+import '../../utils/phone_validator.dart';
+import '../../themes/theme_data.dart';
+import '../../widgets/common/app_bar.dart';
+import '../../widgets/desktop/background_index.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});

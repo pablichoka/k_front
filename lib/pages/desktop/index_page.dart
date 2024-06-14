@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:k_front/forms/desktop/login_form.dart';
+import 'package:k_front/pages/desktop/login_form.dart';
 
-import '../../forms/mobile/login_form.dart';
-import '../../forms/signup.dart';
+import '../mobile/login_form.dart';
+import 'signup.dart';
 import '../../themes/theme_data.dart';
 import '../../utils/device_checker.dart';
 import '../../widgets/common/app_bar.dart';
@@ -37,10 +37,7 @@ Scaffold desktopIndex(BuildContext context) {
                 margin: const EdgeInsets.only(right: 20),
                 child: TextButton(
                     onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const LoginPage()));
+                      Navigator.pushNamed(context, 'login');
                     },
                     style: ButtonStyle(
                         backgroundColor: WidgetStateProperty.all<Color>(
@@ -61,8 +58,7 @@ Scaffold desktopIndex(BuildContext context) {
           children: [
             Padding(
               padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.02),
-              child:
-              Column(
+              child: Column(
                 children: <Widget>[
                   Center(
                     child: SizedBox(
