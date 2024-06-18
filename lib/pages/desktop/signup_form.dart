@@ -100,7 +100,7 @@ class SignUpPageState extends State<SignUpPage> {
   }
 
   final TextEditingController _phoneController = TextEditingController();
-  PhoneNumber _number = PhoneNumber(isoCode: 'ES');
+  final PhoneNumber _number = PhoneNumber(isoCode: 'ES');
 
   @override
   Widget build(BuildContext context) {
@@ -116,7 +116,7 @@ class SignUpPageState extends State<SignUpPage> {
         Center(
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 24.0),
-            width: 500,
+            width: 800,
             child: SingleChildScrollView(
               child: Flex(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -129,54 +129,87 @@ class SignUpPageState extends State<SignUpPage> {
                     decoration: kContainerDecoration.copyWith(
                       color: Theme.of(context).cardColor,
                     ),
-                    child: Form(
-                      key: _formKey,
-                      child: Column(
-                        children: <Widget>[
-                          formBody(), //form fields
-                          ElevatedButton(
-                            onPressed: () async {
-                              await _signup()
-                                  ? Navigator.popAndPushNamed(
-                                      _navigationContext!,
-                                      '/',
-                                    )
-                                  : null;
-                            },
-                            style: ElevatedButton.styleFrom(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 40, vertical: 15),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10.0),
-                              ),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Form(
+                            key: _formKey,
+                            child: Column(
+                              children: <Widget>[
+                                formBody(), //form fields
+                                ElevatedButton(
+                                  onPressed: () async {
+                                    await _signup()
+                                        ? Navigator.popAndPushNamed(
+                                            _navigationContext!,
+                                            '/',
+                                          )
+                                        : null;
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 40, vertical: 15),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10.0),
+                                    ),
+                                  ),
+                                  child: const Text('Sign up'),
+                                ),
+                                const SizedBox(height: 25),
+                              ],
                             ),
-                            child: const Text('Sign up'),
                           ),
-                          const SizedBox(height: 25),
-                          Row(
+                        ),
+                        SizedBox(
+                          height: 500,
+                          child: VerticalDivider(
+                            color: Theme.of(context).shadowColor,
+                            thickness: 1,
+                            width: 50,
+                            indent: 0.0,
+                            endIndent: 0.0,
+                          ),
+                        ),
+                        Column(
                             mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              TextButton(
-                                onPressed: () {},
-                                child: Text(
-                                    style:
-                                        Theme.of(context).textTheme.labelSmall,
-                                    'Terms and Conditions'),
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              SizedBox(
+                                width: 250,
+                                child: oAuth2Buttons(text: 'Sign up with Google', icon: Icons.g_mobiledata)
                               ),
-                              const Text('|'),
-                              TextButton(
-                                onPressed: () {},
-                                child: Text(
-                                    style:
-                                        Theme.of(context).textTheme.labelSmall,
-                                    'Privacy Policy'),
+                              const SizedBox(height: 15),
+                              SizedBox(
+                                width: 250,
+                                child: oAuth2Buttons(text: 'Sign up with Microsoft', icon: Icons.window)
                               ),
-                            ],
-                          ),
-                          const SizedBox(height: 25),
-                        ],
-                      ),
+                              const SizedBox(height: 15),
+                              SizedBox(
+                                width: 250,
+                                child: oAuth2Buttons(text: 'Sign up with Apple', icon: Icons.apple)
+                              ),
+                            ])
+                      ],
                     ),
+                  ),
+                  const SizedBox(height: 15),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      TextButton(
+                        onPressed: () {},
+                        child: Text(
+                            style: Theme.of(context).textTheme.labelSmall,
+                            'Terms and Conditions'),
+                      ),
+                      const Text('|'),
+                      TextButton(
+                        onPressed: () {},
+                        child: Text(
+                            style: Theme.of(context).textTheme.labelSmall,
+                            'Privacy Policy'),
+                      ),
+                    ],
                   ),
                   SizedBox(height: MediaQuery.of(context).size.height * 0.12),
                 ],
@@ -187,6 +220,26 @@ class SignUpPageState extends State<SignUpPage> {
       ]),
       floatingActionButton: themeSelectorButton(context),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+    );
+  }
+
+  ElevatedButton oAuth2Buttons({required String text, required IconData icon}) {
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+      ),
+      onPressed: () => {},
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: <Widget>[
+          Icon(icon),
+          const SizedBox(width: 10),
+          Text(text),
+        ],
+      ),
     );
   }
 
