@@ -11,7 +11,7 @@ import '../../widgets/desktop/carrousel_index.dart';
 
 const title = 'kCal Control';
 
-Scaffold desktopIndex(BuildContext context) {
+Scaffold tabletIndex(BuildContext context) {
   return Scaffold(
     appBar: DAppBar(
       title: title,
@@ -24,7 +24,7 @@ Scaffold desktopIndex(BuildContext context) {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const DesktopSignUpPage()));
+                          builder: (context) => const TabletSignUpPage()));
                 },
                 child: Text('Sign up',
                     style: TextStyle(
@@ -32,6 +32,19 @@ Scaffold desktopIndex(BuildContext context) {
                             .textTheme
                             .headlineLarge
                             ?.color)))),
+        Container(
+            margin: const EdgeInsets.only(right: 20),
+            child: TextButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, 'login');
+                },
+                style: ButtonStyle(
+                    backgroundColor: WidgetStateProperty.all<Color>(
+                        Theme.of(context).highlightColor)),
+                child: Text('Log in',
+                    style: TextStyle(
+                        color:
+                            Theme.of(context).textTheme.headlineLarge?.color))))
       ],
     ),
     body: Stack(

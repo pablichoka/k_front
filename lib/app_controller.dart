@@ -47,7 +47,7 @@ class KCalFront extends StatelessWidget {
       routes: {
         '/': (context) => const WebIndex(),
         'login': (context) => const LoginPage(),
-        'signup': (context) => const SignUpPage(),
+        'signup': (context) => const DesktopSignUpPage(),
       },
     );
   }
