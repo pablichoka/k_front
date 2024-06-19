@@ -21,6 +21,7 @@ class SignUpPage extends StatefulWidget {
 class SignUpPageState extends State<SignUpPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final String title = "kCal Control";
+  bool _obscureText = true;
   BuildContext? _navigationContext;
   var newUser = User(
     username: '',
@@ -38,48 +39,60 @@ class SignUpPageState extends State<SignUpPage> {
       {required String hintText,
       required IconData icon,
       bool obscureText = false,
-      required String field}) {
+      required String field,
+      required String? Function(String?)? validator}) {
     return TextFormField(
-      validator: (value) {
-        if (value == null || value.isEmpty) {
-          return 'Please enter required information.';
-        }
-        return null;
-      },
-      onSaved: (value) {
-        switch (field) {
-          case 'username':
-            newUser.username = value!;
-            break;
-          case 'email':
-            newUser.email = value!;
-            break;
-          case 'password':
-            newUser.password = value!;
-            break;
-          case 'firstName':
-            newUser.firstName = value!;
-            break;
-          case 'lastName':
-            newUser.lastName = value!;
-            break;
-          case 'mobile':
-            newUser.mobile = value!;
-            break;
-          default:
-            break;
-        }
-      },
-      obscureText: obscureText,
-      decoration: InputDecoration(
-        labelText: hintText,
-        prefixIcon: Icon(icon),
-        hintText: hintText,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10.0),
-        ),
-      ),
-    );
+        autovalidateMode: AutovalidateMode.onUserInteraction,
+        validator: validator,
+        onSaved: (value) {
+          switch (field) {
+            case 'username':
+              newUser.username = value!;
+              break;
+            case 'email':
+              newUser.email = value!;
+              break;
+            case 'password':
+              newUser.password = value!;
+              break;
+            case 'firstName':
+              newUser.firstName = value!;
+              break;
+            case 'lastName':
+              newUser.lastName = value!;
+              break;
+            case 'mobile':
+              newUser.mobile = value!;
+              break;
+            default:
+              break;
+          }
+        },
+        obscureText: _obscureText,
+        decoration: InputDecoration(
+          labelText: hintText,
+          prefixIcon: Icon(icon),
+          hintText: hintText,
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+          errorStyle: const TextStyle(
+            fontSize: 10,
+            height: 1,
+          ),
+          suffixIcon: obscureText
+              ? IconButton(
+                  icon: Icon(
+                    _obscureText ? Icons.visibility : Icons.visibility_off,
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      _obscureText = !_obscureText;
+                    });
+                  },
+                )
+              : null,
+        ));
   }
 
   Future<bool> _signup() async {
@@ -175,19 +188,22 @@ class SignUpPageState extends State<SignUpPage> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               SizedBox(
-                                width: 250,
-                                child: oAuth2Buttons(text: 'Sign up with Google', icon: Icons.g_mobiledata)
-                              ),
+                                  width: 250,
+                                  child: oAuth2Buttons(
+                                      text: 'Sign up with Google',
+                                      icon: Icons.g_mobiledata)),
                               const SizedBox(height: 15),
                               SizedBox(
-                                width: 250,
-                                child: oAuth2Buttons(text: 'Sign up with Microsoft', icon: Icons.window)
-                              ),
+                                  width: 250,
+                                  child: oAuth2Buttons(
+                                      text: 'Sign up with Microsoft',
+                                      icon: Icons.window)),
                               const SizedBox(height: 15),
                               SizedBox(
-                                width: 250,
-                                child: oAuth2Buttons(text: 'Sign up with Apple', icon: Icons.apple)
-                              ),
+                                  width: 250,
+                                  child: oAuth2Buttons(
+                                      text: 'Sign up with Apple',
+                                      icon: Icons.apple)),
                             ])
                       ],
                     ),
@@ -211,7 +227,6 @@ class SignUpPageState extends State<SignUpPage> {
                       ),
                     ],
                   ),
-                  SizedBox(height: MediaQuery.of(context).size.height * 0.12),
                 ],
               ),
             ),
@@ -264,30 +279,78 @@ class SignUpPageState extends State<SignUpPage> {
           hintText: 'Username',
           icon: Icons.alternate_email,
           field: 'username',
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return 'Please enter your username';
+            }
+            if(value.length < 6) {
+              return 'Username must be at least 6 characters';
+            }
+            return null;
+          },
         ),
-        const SizedBox(height: 25),
+        const SizedBox(height: 15),
         buildTextField(
-          hintText: 'Email or username',
+          hintText: 'Email',
           icon: Icons.email,
           field: 'email',
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return 'Please enter your email';
+            }
+            String pattern =
+                r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+            RegExp regex = RegExp(pattern);
+            if (!regex.hasMatch(value)) {
+              return 'Please enter a valid email';
+            }
+            return null;
+          },
         ),
-        const SizedBox(height: 25),
+        const SizedBox(height: 15),
         buildTextField(
-            hintText: 'First name', icon: Icons.person, field: 'firstName'),
-        const SizedBox(height: 25),
+            hintText: 'First name',
+            icon: Icons.person,
+            field: 'firstName',
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Please enter your first name';
+              }
+              return null;
+            }),
+        const SizedBox(height: 15),
         buildTextField(
-            hintText: 'Last name', icon: Icons.person, field: 'lastName'),
-        const SizedBox(height: 25),
+            hintText: 'Last name',
+            icon: Icons.person,
+            field: 'lastName',
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Please enter your last name';
+              }
+              return null;
+            }),
+        const SizedBox(height: 15),
         buildTextField(
           hintText: 'Password',
           icon: Icons.lock,
           obscureText: true,
           field: 'password',
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return 'Please enter your password';
+            }
+            String pattern = r'^(?=.*[A-Z])(?=.*[0-9])[A-Za-z0-9.@_]{8,}$';
+            RegExp regex = RegExp(pattern);
+            if (!regex.hasMatch(value)) {
+              return 'Password requires 8 characters, one uppercase letter and one number';
+            }
+            return null;
+          },
         ),
-        const SizedBox(height: 25),
+        const SizedBox(height: 15),
         internationalPhoneNumberInput(
             _number, context, _phoneController, newUser),
-        const SizedBox(height: 25),
+        const SizedBox(height: 15),
       ],
     );
   }
