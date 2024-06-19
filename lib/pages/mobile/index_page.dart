@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../forms/mobile/login_form.dart';
-import '../../forms/signup.dart';
+import 'login_form.dart';
+import '../desktop/signup_form.dart';
 import '../../widgets/desktop/background_index.dart';
 import '../../widgets/mobile/carrousel_index.dart';
 

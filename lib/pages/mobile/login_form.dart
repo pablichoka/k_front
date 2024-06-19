@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:k_front/controller/impl/api_auth_controller_impl.dart';
 import 'package:k_front/controller/api_auth_controller.dart';
-import 'package:k_front/forms/signup.dart';
+import 'package:k_front/pages/desktop/signup_form.dart';
 
 import '../../models/logged_user.dart';
-import '../../pages/dashboard.dart';
+import '../../routes/dashboard.dart';
 import '../../themes/theme_data.dart';
 import '../../widgets/common/app_bar.dart';
 import '../../widgets/desktop/background_index.dart';
@@ -128,7 +128,7 @@ class LoginPageState extends State<LoginPage> {
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 24.0),
                               decoration: kContainerDecoration.copyWith(
-                                  color: Theme.of(context).cardColor),
+                                  color: Theme.of(context).disabledColor),
                               child: SingleChildScrollView(
                                 child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,

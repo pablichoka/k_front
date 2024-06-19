@@ -1,7 +1,9 @@
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:k_front/pages/index.dart';
+import 'package:k_front/pages/desktop/signup_form.dart';
+import 'package:k_front/pages/mobile/login_form.dart';
+import 'package:k_front/routes/index.dart';
 import 'package:k_front/themes/theme_provider.dart';
 import 'package:k_front/themes/theme_data.dart';
 import 'package:k_front/utils/device_checker.dart';
@@ -37,11 +39,16 @@ class KCalFront extends StatelessWidget {
 
     final themeNotifier = Provider.of<ThemeNotifier>(context);
     return MaterialApp(
-      home: kIsWeb ? const WebIndex() : const WebIndex(),
+      // home: kIsWeb ? const WebIndex() : const WebIndex(),
       theme: _kCalControlLightTheme,
       darkTheme: _kCalControlDarkTheme,
       themeMode: themeNotifier.themeMode,
       debugShowCheckedModeBanner: false,
+      routes: {
+        '/': (context) => const WebIndex(),
+        'login': (context) => const LoginPage(),
+        'signup': (context) => const SignUpPage(),
+      },
     );
   }
 }
