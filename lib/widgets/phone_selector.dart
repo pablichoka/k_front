@@ -21,6 +21,7 @@ InternationalPhoneNumberInput internationalPhoneNumberInput(
       useBottomSheetSafeArea: true,
       showFlags: true,
       trailingSpace: true,
+      leadingPadding: 10
     ),
     ignoreBlank: true,
     inputDecoration: InputDecoration(
@@ -28,6 +29,9 @@ InternationalPhoneNumberInput internationalPhoneNumberInput(
       prefixIcon: const Icon(Icons.phone),
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(10.0),
+      ),
+      errorStyle: const TextStyle(
+        fontSize: 10,
       ),
     ),
     autoValidateMode: AutovalidateMode.onUserInteraction,
