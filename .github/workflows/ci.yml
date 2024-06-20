@@ -7,18 +7,19 @@ on:
     branches: [master]
 
 jobs:
-  check-typos:
-    name: typos-check
+  typos:
+    name: runner / typos
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4.1.7
-
-    - name: typos-action
-      uses: crate-ci/typos@v1.22.7
-      with:
-        files: .lib/**
+      - uses: actions/checkout@v4
+      - uses: Shemnei/reviewdog-action-typos@v0.12.1
+        with:
+          reporter: github-check
+          level: error
+          fail_on_error: false
+          files: |
+            ./lib
+          locale: en-gb
 
   build:
     name: flutter-check
