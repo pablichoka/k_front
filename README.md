@@ -1,3 +1,5 @@
+[![CodeFactor](https://www.codefactor.io/repository/github/pablichoka/k_front/badge)](https://www.codefactor.io/repository/github/pablichoka/k_front)
+
 # k_front
 
 A new Flutter project.
