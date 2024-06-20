@@ -7,8 +7,8 @@ import '../utils/phone_validator.dart';
 InternationalPhoneNumberInput internationalPhoneNumberInput(
     PhoneNumber number, BuildContext context, TextEditingController phoneController, newUser) {
   return InternationalPhoneNumberInput(
-    onInputChanged: (PhoneNumber number) {
-      number = number;
+    onInputChanged: (PhoneNumber newNumber) {
+      number = newNumber;
     },
     validator: (value) {
       final countryLengths = Provider.of<Map<String, int>>(context, listen: false);

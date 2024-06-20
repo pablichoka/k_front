@@ -66,7 +66,7 @@ class DesktopSignUpPageState extends State<DesktopSignUpPage> {
               break;
           }
         },
-        obscureText: _obscureText,
+        obscureText: obscureText && _obscureText,
         decoration: InputDecoration(
           labelText: hintText,
           prefixIcon: Icon(icon),
@@ -281,7 +281,7 @@ class DesktopSignUpPageState extends State<DesktopSignUpPage> {
             if (value == null || value.isEmpty) {
               return 'Please enter your username';
             }
-            if(value.length < 6) {
+            if (value.length < 6) {
               return 'Username must be at least 6 characters';
             }
             return null;
@@ -296,11 +296,11 @@ class DesktopSignUpPageState extends State<DesktopSignUpPage> {
             if (value == null || value.isEmpty) {
               return 'Please enter your email';
             }
-            String pattern =
+            String invalidFormat =
                 r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
-            RegExp regex = RegExp(pattern);
+            RegExp regex = RegExp(invalidFormat);
             if (!regex.hasMatch(value)) {
-              return 'Please enter a valid email';
+              return 'Invalid email format';
             }
             return null;
           },
@@ -337,9 +337,13 @@ class DesktopSignUpPageState extends State<DesktopSignUpPage> {
             if (value == null || value.isEmpty) {
               return 'Please enter your password';
             }
+            String invalidSymbol = r'[^\w.@]';
             String pattern = r'^(?=.*[A-Z])(?=.*[0-9])[A-Za-z0-9.@_]{8,}$';
             RegExp regex = RegExp(pattern);
-            if (!regex.hasMatch(value)) {
+            RegExp regex2 = RegExp(invalidSymbol);
+            if (regex2.hasMatch(value)) {
+              return 'Password contains invalid symbols';
+            } else if (!regex.hasMatch(value)) {
               return 'Password requires 8 characters, one uppercase letter and one number';
             }
             return null;
