@@ -18,12 +18,11 @@ jobs:
     - name: typos-action
       uses: crate-ci/typos@v1.22.7
       with:
-        paths: '.lib/'
+        paths: .lib/
 
   build:
     name: flutter-check
     runs-on: ubuntu-latest
-    needs: check-typos 
 
     steps:
     - name: Checkout code
