@@ -1,8 +1,7 @@
-name: CI Workflow
+name: Typos check
 
 on:
   push:
-  pull_request:
 
 jobs:
   typos:
@@ -23,18 +22,4 @@ jobs:
             ./lib
           locale: en-gb
 
-  build:
-    name: flutter-check
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4.1.7
-
-      - name: Set up Flutter
-        uses: subosito/flutter-action@v2.16.0
-
-      - name: Install dependencies
-        run: flutter pub get
-
-      - name: Analyze Dart
-        uses: zgosalvez/github-actions-analyze-dart@v3.0.3
+  
