@@ -26,6 +26,7 @@ jobs:
   build:
     name: flutter-check
     runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request' || github.ref == 'refs/heads/main'
     steps:
       - name: Checkout code
         uses: actions/checkout@v4.1.7
