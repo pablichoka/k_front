@@ -9,6 +9,8 @@ import '../../widgets/common/app_bar.dart';
 import '../../widgets/desktop/background_index.dart';
 import '../../widgets/phone_selector.dart';
 
+//TODO unify the signup logic for all devices
+
 class TabletSignUpPage extends StatefulWidget {
   const TabletSignUpPage({super.key});
 
