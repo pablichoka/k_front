@@ -128,7 +128,7 @@ class LoginPageState extends State<LoginPage> {
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 24.0),
                               decoration: kContainerDecoration.copyWith(
-                                  color: Theme.of(context).disabledColor),
+                                  color: Theme.of(context).canvasColor),
                               child: SingleChildScrollView(
                                 child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,

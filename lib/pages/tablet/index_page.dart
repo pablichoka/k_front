@@ -37,7 +37,7 @@ Scaffold tabletIndex(BuildContext context) {
             margin: const EdgeInsets.only(right: 20),
             child: TextButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, 'login');
+                  Navigator.pushNamed(context, 'tablet/login');
                 },
                 style: ButtonStyle(
                     backgroundColor: WidgetStateProperty.all<Color>(

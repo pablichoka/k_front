@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:k_front/pages/desktop/login_form.dart';
 import 'package:k_front/pages/desktop/signup_form.dart';
 import 'package:k_front/pages/mobile/login_form.dart';
+import 'package:k_front/pages/tablet/login_form.dart';
 import 'package:k_front/routes/index.dart';
 import 'package:k_front/themes/theme_data.dart';
 import 'package:k_front/themes/theme_provider.dart';
@@ -48,7 +50,9 @@ class KCalFront extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         routes: {
           '/': (context) => const WebIndex(),
-          'login': (context) => const LoginPage(),
+          // 'desktop/login': (context) => const DesktopLoginForm(),
+          // 'mobile/login': (context) => const MobileLoginForm(),
+          'tablet/login': (context) => const TabletLoginForm(),
           'signup': (context) => const DesktopSignUpPage(),
         },
       ),
