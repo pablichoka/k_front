@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter/services.dart';
 
 Future<Map<String, int>> loadCountryLengths() async {
-  final String jsonString = await rootBundle.loadString('country_phone_lengths.json');
+  final String jsonString = await rootBundle.loadString('assets/country_phone_lengths.json');
   final Map<String, dynamic> jsonResponse = json.decode(jsonString);
   try {
     return jsonResponse.map((key, value) => MapEntry(key, value as int));

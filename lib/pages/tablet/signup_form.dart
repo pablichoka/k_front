@@ -78,7 +78,7 @@ class TabletSignUpPageState extends State<TabletSignUpPage> {
             fontSize: 10,
             height: 1,
           ),
-          suffixIcon: obscureText && _obscureText
+          suffixIcon: obscureText
               ? IconButton(
                   icon: Icon(
                     obscureText && _obscureText ? Icons.visibility : Icons.visibility_off,
@@ -357,10 +357,13 @@ class TabletSignUpPageState extends State<TabletSignUpPage> {
                     if (value == null || value.isEmpty) {
                       return 'Please enter your password';
                     }
-                    String pattern =
-                        r'^(?=.*[A-Z])(?=.*[0-9])[A-Za-z0-9.@_]{8,}$';
+                    String invalidSymbol = r'[^\w.@]';
+                    String pattern = r'^(?=.*[A-Z])(?=.*[0-9])[A-Za-z0-9.@_]{8,}$';
                     RegExp regex = RegExp(pattern);
-                    if (!regex.hasMatch(value)) {
+                    RegExp regex2 = RegExp(invalidSymbol);
+                    if (regex2.hasMatch(value)) {
+                      return 'Password contains invalid symbols';
+                    } else if (!regex.hasMatch(value)) {
                       return 'Password requires 8 characters, one uppercase letter and one number';
                     }
                     return null;
