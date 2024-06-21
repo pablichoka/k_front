@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:k_front/pages/desktop/login_form.dart';
+import 'package:k_front/pages/tablet/login_form.dart';
 
 import '../mobile/login_form.dart';
 import 'signup_form.dart';
@@ -90,7 +91,7 @@ Scaffold tabletIndex(BuildContext context) {
                           ),
                           width: MediaQuery.of(context).size.width * 0.25,
                           height: 475,
-                          child: const LoginForm()),
+                          child: const TabletLoginForm()),
                     ),
                   )
                 : const SizedBox(),

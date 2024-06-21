@@ -77,7 +77,7 @@ Scaffold desktopIndex(BuildContext context) {
                           ),
                           width: MediaQuery.of(context).size.width * 0.25,
                           height: 475,
-                          child: const LoginForm()),
+                          child: const DesktopLoginForm()),
                     ),
                   )
                 : const SizedBox(),

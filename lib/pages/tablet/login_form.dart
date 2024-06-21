@@ -7,14 +7,14 @@ import '../../models/logged_user.dart';
 import '../../themes/theme_data.dart';
 import '../../routes/dashboard.dart';
 
-class DesktopLoginForm extends StatefulWidget {
-  const DesktopLoginForm({super.key});
+class TabletLoginForm extends StatefulWidget {
+  const TabletLoginForm({super.key});
 
   @override
-  DesktopLoginFormState createState() => DesktopLoginFormState();
+  TabletLoginFormState createState() => TabletLoginFormState();
 }
 
-class DesktopLoginFormState extends State<DesktopLoginForm> {
+class TabletLoginFormState extends State<TabletLoginForm> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final String title = "kCal Control";
   final FocusScopeNode _focusNode = FocusScopeNode();
