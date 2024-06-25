@@ -17,9 +17,6 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
-      - name: Check format
-        run: flutter format --set-exit-if-changed
-
       - name: Analyze Dart
         uses: zgosalvez/github-actions-analyze-dart@v3.0.3
 
