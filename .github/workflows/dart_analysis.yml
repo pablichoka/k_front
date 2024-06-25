@@ -24,6 +24,7 @@ jobs:
         uses: zgosalvez/github-actions-analyze-dart@v3.0.3
 
       - name: Build apk
+        if: github.base_ref == 'main'
         run: flutter build apk
 
       - name: Release apk
