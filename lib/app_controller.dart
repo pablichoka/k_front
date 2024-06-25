@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:k_front/pages/desktop/login_form.dart';
 import 'package:k_front/pages/desktop/signup_form.dart';
-import 'package:k_front/pages/mobile/login_form.dart';
 import 'package:k_front/pages/tablet/login_form.dart';
 import 'package:k_front/routes/index.dart';
 import 'package:k_front/themes/theme_data.dart';

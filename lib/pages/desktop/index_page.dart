@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:k_front/pages/desktop/login_form.dart';
 
-import '../mobile/login_form.dart';
-import 'signup_form.dart';
 import '../../themes/theme_data.dart';
 import '../../utils/device_checker.dart';
 import '../../widgets/common/app_bar.dart';
 import '../../widgets/desktop/background_index.dart';
 import '../../widgets/desktop/carrousel_index.dart';
+import 'signup_form.dart';
 
 const title = 'kCal Control';
 

@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:k_front/controller/api_auth_controller.dart';
 import 'package:k_front/controller/impl/api_auth_controller_impl.dart';
-import 'package:k_front/pages/tablet/signup_form.dart';
 import 'package:k_front/widgets/common/app_bar.dart';
 
 import '../../models/logged_user.dart';
-import '../../themes/theme_data.dart';
 import '../../routes/dashboard.dart';
+import '../../themes/theme_data.dart';
 import '../../widgets/common/o_auth_buttons.dart';
 import '../../widgets/desktop/background_index.dart';
 
@@ -112,128 +110,135 @@ class TabletLoginFormState extends State<TabletLoginForm> {
                       width: 900,
                       height: 450,
                       decoration: kContainerDecoration.copyWith(
-                          color: Theme.of(context).canvasColor,
-                        ),
+                        color: Theme.of(context).canvasColor,
+                      ),
                       padding: const EdgeInsets.symmetric(
-                            horizontal: 40, vertical: 30),
+                          horizontal: 40, vertical: 30),
                       child: Center(
                         child: Form(
                           key: _formKey,
                           child: Column(
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: <Widget>[
-                                  const Text(
-                                    'Welcome Back!',
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
-                                    ),
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: <Widget>[
+                                const Text(
+                                  'Welcome Back!',
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
                                   ),
-                                  Row(
-                                    children: [
-                                      Expanded(
-                                        child: Column(
-                                          children: [
-                                            const SizedBox(height: 20),
-                                            buildTextField(
-                                              hintText: 'Email or username',
-                                              icon: Icons.person,
-                                              onSave: (value) {
-                                                _newLoggedUser.username = value!;
-                                              },
-                                            ),
-                                            const SizedBox(height: 20),
-                                            buildTextField(
-                                              hintText: 'Password',
-                                              icon: Icons.lock,
-                                              obscureText: true,
-                                              onSave: (value) {
-                                                _newLoggedUser.password = value!;
-                                              },
-                                            ),
-                                            const SizedBox(height: 10),
-                                            Row(
-                                              children: <Widget>[
-                                                Checkbox(
-                                                  value: _rememberMe,
-                                                  onChanged: (value) {
-                                                    setState(() {
-                                                      _rememberMe = value!;
-                                                    });
-                                                  },
-                                                ),
-                                                const Text('Remember me'),
-                                              ],
-                                            ),
-                                            const SizedBox(height: 10),
-                                            ElevatedButton(
-                                              onPressed: () async {
-                                                await _login()
-                                                    ? Navigator.push(
-                                                        _navigationContext!,
-                                                        MaterialPageRoute(
-                                                            builder: (context) =>
-                                                                const Dashboard()))
-                                                    : null;
-                                              },
-                                              style: ElevatedButton.styleFrom(
-                                                backgroundColor:
-                                                    Theme.of(context).splashColor,
-                                                padding: const EdgeInsets.symmetric(
-                                                    horizontal: 40, vertical: 5),
-                                                shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(10.0),
-                                                ),
-                                              ),
-                                              child: const Text('Sign In'),
-                                            ),
-                                            TextButton(
-                                              onPressed: () {},
-                                              child: const Text('Forgot password?'),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.all(24.0),
-                                        child: SizedBox(
-                                          height: 300,
-                                          child: VerticalDivider(
-                                            color: Theme.of(context).disabledColor,
-                                            thickness: 1.5,
-                                            width: 1,
-                                            endIndent: 20,
-                                            indent: 20,
+                                ),
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: Column(
+                                        children: [
+                                          const SizedBox(height: 20),
+                                          buildTextField(
+                                            hintText: 'Email or username',
+                                            icon: Icons.person,
+                                            onSave: (value) {
+                                              _newLoggedUser.username = value!;
+                                            },
                                           ),
+                                          const SizedBox(height: 20),
+                                          buildTextField(
+                                            hintText: 'Password',
+                                            icon: Icons.lock,
+                                            obscureText: true,
+                                            onSave: (value) {
+                                              _newLoggedUser.password = value!;
+                                            },
+                                          ),
+                                          const SizedBox(height: 10),
+                                          Row(
+                                            children: <Widget>[
+                                              Checkbox(
+                                                value: _rememberMe,
+                                                onChanged: (value) {
+                                                  setState(() {
+                                                    _rememberMe = value!;
+                                                  });
+                                                },
+                                              ),
+                                              const Text('Remember me'),
+                                            ],
+                                          ),
+                                          const SizedBox(height: 10),
+                                          ElevatedButton(
+                                            onPressed: () async {
+                                              await _login()
+                                                  ? Navigator.push(
+                                                      _navigationContext!,
+                                                      MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              const Dashboard()))
+                                                  : null;
+                                            },
+                                            style: ElevatedButton.styleFrom(
+                                              backgroundColor:
+                                                  Theme.of(context).splashColor,
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 40,
+                                                      vertical: 5),
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(10.0),
+                                              ),
+                                            ),
+                                            child: const Text('Sign In'),
+                                          ),
+                                          TextButton(
+                                            onPressed: () {},
+                                            child:
+                                                const Text('Forgot password?'),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(24.0),
+                                      child: SizedBox(
+                                        height: 300,
+                                        child: VerticalDivider(
+                                          color:
+                                              Theme.of(context).disabledColor,
+                                          thickness: 1.5,
+                                          width: 1,
+                                          endIndent: 20,
+                                          indent: 20,
                                         ),
                                       ),
-                                      Column(
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          crossAxisAlignment: CrossAxisAlignment.center,
-                                          children: [
-                                            SizedBox(
-                                                width: 200,
-                                                child: oAuth2Buttons(
-                                                    text: 'Sign up with Google',
-                                                    icon: Icons.g_mobiledata)),
-                                            const SizedBox(height: 15),
-                                            SizedBox(
-                                                width: 200,
-                                                child: oAuth2Buttons(
-                                                    text: 'Sign up with Microsoft',
-                                                    icon: Icons.window)),
-                                            const SizedBox(height: 15),
-                                            SizedBox(
-                                                width: 200,
-                                                child: oAuth2Buttons(
-                                                    text: 'Sign up with Apple',
-                                                    icon: Icons.apple)),
-                                          ])
-                                    ],
-                                  ),
-                                ]),
+                                    ),
+                                    Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          SizedBox(
+                                              width: 200,
+                                              child: oAuth2Buttons(
+                                                  text: 'Sign up with Google',
+                                                  icon: Icons.g_mobiledata)),
+                                          const SizedBox(height: 15),
+                                          SizedBox(
+                                              width: 200,
+                                              child: oAuth2Buttons(
+                                                  text:
+                                                      'Sign up with Microsoft',
+                                                  icon: Icons.window)),
+                                          const SizedBox(height: 15),
+                                          SizedBox(
+                                              width: 200,
+                                              child: oAuth2Buttons(
+                                                  text: 'Sign up with Apple',
+                                                  icon: Icons.apple)),
+                                        ])
+                                  ],
+                                ),
+                              ]),
                         ),
                       ),
                     ),
