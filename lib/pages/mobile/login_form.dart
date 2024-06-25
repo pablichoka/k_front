@@ -128,7 +128,7 @@ class LoginPageState extends State<LoginPage> {
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 24.0),
                               decoration: kContainerDecoration.copyWith(
-                                  color: Theme.of(context).disabledColor),
+                                  color: Theme.of(context).canvasColor),
                               child: SingleChildScrollView(
                                 child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
@@ -210,7 +210,7 @@ class LoginPageState extends State<LoginPage> {
                                             PageRouteBuilder(
                                               pageBuilder: (context, animation1,
                                                       animation2) =>
-                                                  const SignUpPage(),
+                                                  const DesktopSignUpPage(),
                                               transitionDuration:
                                                   const Duration(
                                                       milliseconds: 300),

@@ -36,7 +36,7 @@ class ProfilePage extends StatelessWidget {
                       const SizedBox(width: 16.0),
                       FloatingActionButton.extended(
                         onPressed: () {},
-                        heroTag: 'mesage',
+                        heroTag: 'message',
                         elevation: 0,
                         backgroundColor: Colors.red,
                         label: const Text("Message"),

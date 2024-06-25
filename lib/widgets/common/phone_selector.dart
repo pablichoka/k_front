@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
+import 'package:provider/provider.dart';
 
-import '../utils/phone_validator.dart';
+import '../../utils/phone_validator.dart';
 
 InternationalPhoneNumberInput internationalPhoneNumberInput(
     PhoneNumber number, BuildContext context, TextEditingController phoneController, newUser) {
   return InternationalPhoneNumberInput(
-    onInputChanged: (PhoneNumber number) {
-      number = number;
+    onInputChanged: (PhoneNumber newNumber) {
+      number = newNumber;
     },
     validator: (value) {
-      if (validatePhoneNumber(phoneNumber: value!, isoCode: number.isoCode!)) {
+      final countryLengths = Provider.of<Map<String, int>>(context, listen: false);
+      if (validatePhoneNumber(phoneNumber: value!, isoCode: number.isoCode!, countryLengths: countryLengths)) {
         return null;
       } else {
         return 'Enter a valid phone number';

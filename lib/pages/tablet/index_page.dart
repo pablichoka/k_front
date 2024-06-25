@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:k_front/pages/desktop/login_form.dart';
+import 'package:k_front/pages/tablet/login_form.dart';
 
 import '../../themes/theme_data.dart';
 import '../../utils/device_checker.dart';
@@ -10,7 +10,7 @@ import 'signup_form.dart';
 
 const title = 'kCal Control';
 
-Scaffold desktopIndex(BuildContext context) {
+Scaffold tabletIndex(BuildContext context) {
   return Scaffold(
     appBar: DAppBar(
       title: title,
@@ -23,7 +23,7 @@ Scaffold desktopIndex(BuildContext context) {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const DesktopSignUpPage()));
+                          builder: (context) => const TabletSignUpPage()));
                 },
                 child: Text('Sign up',
                     style: TextStyle(
@@ -31,6 +31,19 @@ Scaffold desktopIndex(BuildContext context) {
                             .textTheme
                             .headlineLarge
                             ?.color)))),
+        Container(
+            margin: const EdgeInsets.only(right: 20),
+            child: TextButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, 'tablet/login');
+                },
+                style: ButtonStyle(
+                    backgroundColor: WidgetStateProperty.all<Color>(
+                        Theme.of(context).highlightColor)),
+                child: Text('Log in',
+                    style: TextStyle(
+                        color:
+                            Theme.of(context).textTheme.headlineLarge?.color))))
       ],
     ),
     body: Stack(
@@ -76,7 +89,7 @@ Scaffold desktopIndex(BuildContext context) {
                           ),
                           width: MediaQuery.of(context).size.width * 0.25,
                           height: 475,
-                          child: const DesktopLoginForm()),
+                          child: const TabletLoginForm()),
                     ),
                   )
                 : const SizedBox(),

@@ -13,7 +13,18 @@ import 'package:k_front/app_controller.dart';
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(const KCalFront());
+    await tester.pumpWidget(const KCalFront(countryLengths: {
+      "ES": 9,
+      "US": 10,
+      "FR": 9,
+      "IT": 10,
+      "DE": 10,
+      "GB": 10,
+      "PT": 9,
+      "NL": 10,
+      "BE": 9,
+      "DK": 8,
+    },));
 
     // Verify that our counter starts at 0.
     expect(find.text('0'), findsOneWidget);

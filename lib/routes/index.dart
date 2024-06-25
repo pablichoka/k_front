@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:k_front/pages/desktop/index_page.dart';
+import 'package:k_front/pages/tablet/index_page.dart';
 
 import '../controller/impl/api_user_controller_impl.dart';
 import '../controller/api_user_controller.dart';
@@ -43,7 +44,7 @@ class _WebIndexState extends State<WebIndex> {
     return isDesktop(context)
         ? desktopIndex(context)
         : isTablet(context)
-            ? desktopIndex(context)
+            ? tabletIndex(context)
             : mobileIndex(context);
   }
 }
