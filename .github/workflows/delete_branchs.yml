@@ -12,10 +12,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
  
-      - name: Delete branch if merged
-        if: github.event.pull_request.merged == true
-        run: |
-          branch_name=$(echo ${GITHUB_REF#refs/heads/})
-          if [[ $branch_name == dev/* || $branch_name == fixbug/* ]]; then
-            git push origin --delete $branch_name
-          fi
+      - name: Delete merged branch
+        uses: SvanBoxel/delete-merged-branch@1.4.3
+        with:
+         exclude: development          
