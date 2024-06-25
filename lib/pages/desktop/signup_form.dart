@@ -7,7 +7,7 @@ import '../../controller/impl/api_user_controller_impl.dart';
 import '../../themes/theme_data.dart';
 import '../../widgets/common/app_bar.dart';
 import '../../widgets/desktop/background_index.dart';
-import '../../widgets/phone_selector.dart';
+import '../../widgets/common/phone_selector.dart';
 
 class DesktopSignUpPage extends StatefulWidget {
   const DesktopSignUpPage({super.key});
