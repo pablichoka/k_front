@@ -1,0 +1,21 @@
+name: Delete branches after merge
+ 
+on:
+  pull_request:
+    types: [closed]
+ 
+jobs:
+  delete_merged_branch:
+    runs-on: ubuntu-latest
+ 
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+ 
+      - name: Delete branch if merged
+        if: github.event.pull_request.merged == true
+        run: |
+          branch_name=$(echo ${GITHUB_REF#refs/heads/})
+          if [[ $branch_name == dev/* || $branch_name == fixbug/* ]]; then
+            git push origin --delete $branch_name
+          fi
