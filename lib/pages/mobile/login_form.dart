@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:k_front/forms/signup.dart';
-import 'package:k_front/services/api_service.dart' as api;
+import 'package:k_front/controller/impl/api_auth_controller_impl.dart';
+import 'package:k_front/controller/api_auth_controller.dart';
+import 'package:k_front/pages/desktop/signup_form.dart';
 
 import '../../models/logged_user.dart';
-import '../../pages/dashboard.dart';
+import '../../routes/dashboard.dart';
 import '../../themes/theme_data.dart';
 import '../../widgets/common/app_bar.dart';
 import '../../widgets/desktop/background_index.dart';
@@ -21,11 +22,13 @@ class LoginPageState extends State<LoginPage> {
   final String title = "kCal Control";
   final FocusScopeNode _focusNode = FocusScopeNode();
   BuildContext? _navigationContext;
-  var _newLoggedUser = LoggedUser(
+  final _newLoggedUser = LoggedUser(
     username: '',
     password: '',
   );
   late bool _rememberMe = false;
+
+  ApiAuthController apiUser = ApiAuthControllerImpl();
 
   TextFormField buildTextField(
       {required String hintText,
@@ -55,7 +58,7 @@ class LoginPageState extends State<LoginPage> {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
       try {
-        return await api.ApiService.instance
+        return await apiUser
             .login(_newLoggedUser.username, _newLoggedUser.password);
       } catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -125,7 +128,7 @@ class LoginPageState extends State<LoginPage> {
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 24.0),
                               decoration: kContainerDecoration.copyWith(
-                                  color: Theme.of(context).cardColor),
+                                  color: Theme.of(context).canvasColor),
                               child: SingleChildScrollView(
                                 child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
@@ -207,7 +210,7 @@ class LoginPageState extends State<LoginPage> {
                                             PageRouteBuilder(
                                               pageBuilder: (context, animation1,
                                                       animation2) =>
-                                                  const SignUpPage(),
+                                                  const DesktopSignUpPage(),
                                               transitionDuration:
                                                   const Duration(
                                                       milliseconds: 300),

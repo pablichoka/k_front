@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:k_front/pages/homePage.dart';
-import 'package:k_front/pages/menu_builder.dart';
-import 'package:k_front/pages/menu_list.dart';
-import 'package:k_front/pages/profile.dart';
+import 'package:k_front/routes/home_page.dart';
+import 'package:k_front/routes/menu_builder.dart';
+import 'package:k_front/routes/menu_list.dart';
+import 'package:k_front/routes/profile.dart';
 import 'package:k_front/widgets/common/dashboard_sidebar.dart';
 import 'package:sidebarx/sidebarx.dart';
 

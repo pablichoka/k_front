@@ -5,7 +5,7 @@ on:
     branches:
       - development
       - main
-
+      
 jobs:
   build:
     name: flutter-check

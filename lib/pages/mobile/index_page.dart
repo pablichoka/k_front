@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../forms/mobile/login.dart';
-import '../../forms/signup.dart';
+import 'login_form.dart';
+import '../desktop/signup_form.dart';
 import '../../widgets/desktop/background_index.dart';
 import '../../widgets/mobile/carrousel_index.dart';
 
@@ -48,7 +48,7 @@ Scaffold mobileIndex(BuildContext context) {
                                 PageRouteBuilder(
                                   pageBuilder:
                                       (context, animation1, animation2) =>
-                                          const SignUpPage(),
+                                          const DesktopSignUpPage(),
                                   transitionDuration:
                                       const Duration(milliseconds: 300),
                                   transitionsBuilder:
