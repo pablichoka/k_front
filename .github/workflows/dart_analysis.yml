@@ -1,14 +1,13 @@
-name: Dart analysis
+name: CI Workflow
 
 on:
   pull_request:
     branches:
       - development
       - main
-      
+
 jobs:
   build:
-    name: flutter-check
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -20,16 +19,98 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
+      - name: Check format
+        run: flutter format --set-exit-if-changed
+
       - name: Analyze Dart
         uses: zgosalvez/github-actions-analyze-dart@v3.0.3
 
       - name: Build apk
-        if: github.base_ref == 'main'
         run: flutter build apk
 
-      - name: Release apk
-        if: github.base_ref == 'main'
+      - name: Upload APK Artifact
         uses: actions/upload-artifact@v1
         with:
-          name: release-apk
+          name: apk
           path: build/app/outputs/apk/release/app-release.apk
+
+  versioning:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4.1.7
+
+      - name: Set up Git
+        run: |
+          git config --global user.name 'github-actions'
+          git config --global user.email 'github-actions@github.com'
+
+      - name: Get current version
+        id: get_version
+        run: echo "VERSION=$(cat version.txt)" >> $GITHUB_ENV
+
+      - name: Increment version
+        id: increment_version
+        run: |
+          VERSION=${{ env.VERSION }}
+          if [ "${{ github.base_ref }}" = "main" ]; then
+            VERSION=$(echo $VERSION | awk -F. -v OFS=. '{$NF += 0; print}')
+          else
+            VERSION=$(echo $VERSION | awk -F. -v OFS=. '{$NF += 1; print}')
+          fi
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+          echo $VERSION > version.txt
+
+      - name: Commit updated version
+        run: |
+          git checkout -b version-bump
+          git add version.txt
+          git commit -m "Increment version to ${{ env.VERSION }}"
+          git push origin version-bump
+          git checkout ${{ github.head_ref }}
+
+      - name: Upload Version Artifact
+        uses: actions/upload-artifact@v1
+        with:
+          name: version
+          path: version.txt
+
+  create-release:
+    runs-on: ubuntu-latest
+    needs: [build, versioning]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4.1.7
+
+      - name: Download APK Artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: apk
+          path: build/app/outputs/apk/release
+
+      - name: Download Version Artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: version
+          path: .
+
+      - name: Create Release
+        if: github.base_ref == 'main'
+        uses: softprops/action-gh-release@v1
+        with:
+          files: build/app/outputs/apk/release/app-release.apk
+          tag_name: ${{ env.VERSION }}
+          release_name: Release ${{ env.VERSION }}
+          draft: false
+          prerelease: false
+
+      - name: Create Pre-Release
+        if: github.base_ref == 'development'
+        uses: softprops/action-gh-release@v1
+        with:
+          files: build/app/outputs/apk/release/app-release.apk
+          tag_name: ${{ env.VERSION }}-pre
+          release_name: Pre-Release ${{ env.VERSION }}-pre
+          draft: false
+          prerelease: true
