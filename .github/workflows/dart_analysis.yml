@@ -46,7 +46,7 @@ jobs:
       - name: Get current version
         id: get_version
         run: |
-          VERSION=$(cat version.txt)
+          VERSION=$(git describe --tags $(git rev-list --tags --max-count=1))
           echo "VERSION=${VERSION}" >> $GITHUB_ENV
 
       - name: Increment version
@@ -60,36 +60,13 @@ jobs:
           fi
           echo "VERSION=$VERSION" >> $GITHUB_ENV
           echo $VERSION > version.txt
-          cat version.txt
 
-      - name: Verify changes
+      - name: Commit and tag version
         run: |
-          cat version.txt
-          git status
-          git diff version.txt
-
-      - name: Commit updated version
-        run: |
-          git checkout -b version-bump
           git add version.txt
           git commit -m "Increment version to ${{ env.VERSION }}"
-          git push origin version-bump
-          git checkout ${{ github.head_ref }}
-        continue-on-error: true
-
-      - name: Check if commit was made
-        run: |
-          if git diff-index --quiet HEAD --; then
-            echo "No changes to commit"
-          else
-            echo "Changes were committed"
-          fi
-
-      - name: Upload Version Artifact
-        uses: actions/upload-artifact@v4.3.3
-        with:
-          name: version
-          path: version.txt
+          git tag ${{ env.VERSION }}
+          git push origin ${{ env.VERSION }}
 
   create-release:
     runs-on: ubuntu-latest
