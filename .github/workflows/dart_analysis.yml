@@ -2,6 +2,9 @@ name: Dart analysis
 
 on:
   pull_request:
+    branches:
+      - development
+      - main
 
 jobs:
   build:
@@ -20,3 +23,13 @@ jobs:
       - name: Analyze Dart
         uses: zgosalvez/github-actions-analyze-dart@v3.0.3
 
+      - name: Build apk
+        if: github.base_ref == 'main'
+        run: flutter build apk
+
+      - name: Release apk
+        if: github.base_ref == 'main'
+        uses: actions/upload-artifact@v1
+        with:
+          name: release-apk
+          path: build/app/outputs/apk/release/app-release.apk
