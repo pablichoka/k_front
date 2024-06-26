@@ -59,7 +59,13 @@ jobs:
           echo "VERSION=$VERSION" >> $GITHUB_ENV
           echo $VERSION > version.txt
 
+      - name: Check if version.txt is modified
+        run: |
+          git diff --exit-code version.txt
+        continue-on-error: true
+
       - name: Commit updated version
+        if: steps.increment_version.outputs.VERSION != env.VERSION
         run: |
           git checkout -b version-bump
           git add version.txt
