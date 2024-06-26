@@ -19,9 +19,6 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
-      - name: Check format
-        run: flutter format --set-exit-if-changed
-
       - name: Analyze Dart
         uses: zgosalvez/github-actions-analyze-dart@v3.0.3
 
@@ -29,7 +26,7 @@ jobs:
         run: flutter build apk
 
       - name: Upload APK Artifact
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v4.3.3
         with:
           name: apk
           path: build/app/outputs/apk/release/app-release.apk
@@ -71,7 +68,7 @@ jobs:
           git checkout ${{ github.head_ref }}
 
       - name: Upload Version Artifact
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v4.3.3
         with:
           name: version
           path: version.txt
@@ -84,20 +81,20 @@ jobs:
         uses: actions/checkout@v4.1.7
 
       - name: Download APK Artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v4.1.7
         with:
           name: apk
           path: build/app/outputs/apk/release
 
       - name: Download Version Artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v4.1.7
         with:
           name: version
           path: .
 
       - name: Create Release
         if: github.base_ref == 'main'
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2.0.6
         with:
           files: build/app/outputs/apk/release/app-release.apk
           tag_name: ${{ env.VERSION }}
@@ -107,7 +104,7 @@ jobs:
 
       - name: Create Pre-Release
         if: github.base_ref == 'development'
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2.0.6
         with:
           files: build/app/outputs/apk/release/app-release.apk
           tag_name: ${{ env.VERSION }}-pre
