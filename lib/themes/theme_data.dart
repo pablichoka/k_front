@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:material_theme_builder/material_theme_builder.dart';
 import 'package:provider/provider.dart';
 
-import '../services/theme_provider.dart';
+import 'theme_provider.dart';
 
 const lightGreen = Color.fromARGB(255, 164, 194, 165);
 const dark = Color.fromARGB(255, 74, 74, 72);
