@@ -2,7 +2,10 @@ name: Dart analysis
 
 on:
   pull_request:
-
+    branches:
+      - development
+      - main
+      
 jobs:
   build:
     name: flutter-check
