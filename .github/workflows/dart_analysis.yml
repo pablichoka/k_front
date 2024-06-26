@@ -45,7 +45,9 @@ jobs:
 
       - name: Get current version
         id: get_version
-        run: echo "VERSION=$(cat version.txt)" >> $GITHUB_ENV
+        run: |
+          VERSION=$(cat version.txt)
+          echo "VERSION=${VERSION}" >> $GITHUB_ENV
 
       - name: Increment version
         id: increment_version
@@ -58,20 +60,30 @@ jobs:
           fi
           echo "VERSION=$VERSION" >> $GITHUB_ENV
           echo $VERSION > version.txt
+          cat version.txt
 
-      - name: Check if version.txt is modified
+      - name: Verify changes
         run: |
-          git diff --exit-code version.txt
-        continue-on-error: true
+          cat version.txt
+          git status
+          git diff version.txt
 
       - name: Commit updated version
-        if: steps.increment_version.outputs.VERSION != env.VERSION
         run: |
           git checkout -b version-bump
           git add version.txt
           git commit -m "Increment version to ${{ env.VERSION }}"
           git push origin version-bump
           git checkout ${{ github.head_ref }}
+        continue-on-error: true
+
+      - name: Check if commit was made
+        run: |
+          if git diff-index --quiet HEAD --; then
+            echo "No changes to commit"
+          else
+            echo "Changes were committed"
+          fi
 
       - name: Upload Version Artifact
         uses: actions/upload-artifact@v4.3.3
