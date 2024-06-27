@@ -68,8 +68,13 @@ jobs:
           git commit -m "Increment version to ${{ env.NEW_VERSION }}"
           git tag ${{ env.NEW_VERSION }}
           git push origin ${{ env.NEW_VERSION }}
-          git push origin HEAD:refs/heads/$(git rev-parse --abbrev-ref HEAD)
+          git push origin HEAD:refs/heads/development
 
+      - name: Upload Version Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: version
+          path: version.txt
 
   create-release:
     runs-on: ubuntu-latest
