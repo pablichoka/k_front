@@ -67,9 +67,10 @@ jobs:
           git add version.txt
           git commit -m "Increment version to ${{ env.NEW_VERSION }}"
           git tag ${{ env.NEW_VERSION }}
+          git pull origin development  # Pull latest changes from development
           git push origin ${{ env.NEW_VERSION }}
-          git pull
           git push origin HEAD:refs/heads/development
+
 
       - name: Upload Version Artifact
         uses: actions/upload-artifact@v2
