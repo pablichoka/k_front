@@ -61,19 +61,20 @@ jobs:
 
       - name: Commit and tag version
         env:
-          GH_PAT: ${{ secrets.VERSIONING }}
+          VERSIONING: ${{ secrets.VERSIONING }}
         run: |
-          git remote set-url origin https://x-access-token:${{ secrets.GH_PAT }}@github.com/${{ github.repository }}
+          git remote set-url origin https://x-access-token:${{ secrets.VERSIONING }}@github.com/${{ github.repository }}
+          git checkout development  
+          git pull origin development
           git add version.txt
           git commit -m "Increment version to ${{ env.NEW_VERSION }}"
           git tag ${{ env.NEW_VERSION }}
-          git pull origin development  # Pull latest changes from development
           git push origin ${{ env.NEW_VERSION }}
-          git push origin HEAD:refs/heads/development
+          git push origin development 
 
 
       - name: Upload Version Artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4.3.3
         with:
           name: version
           path: version.txt
