@@ -37,6 +37,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4.1.7
+        with:
+          token: ${{ secrets.VERSIONING }}
 
       - name: Set up Git
         run: |
@@ -58,6 +60,8 @@ jobs:
           echo $NEW_VERSION > version.txt
 
       - name: Commit and tag version
+        env:
+          VERSIONING: ${{ secrets.VERSIONING }}
         run: |
           git add version.txt
           git commit -m "Increment version to ${{ env.NEW_VERSION }}"
