@@ -61,25 +61,35 @@ jobs:
 
       - name: Commit and tag version
         env:
-          VERSIONING: ${{ secrets.VERSIONING }}
+          GH_PAT: ${{ secrets.VERSIONING }}
+          BRANCH_NAME: development  # Asegúrate de que estás utilizando el nombre correcto de la rama
         run: |
-          git remote set-url origin https://x-access-token:${{ secrets.VERSIONING }}@github.com/${{ github.repository }}
-          BRANCH_NAME="${{ github.base_ref || github.head_ref || github.ref_name }}"
-          echo "Branch name is $BRANCH_NAME"
-          if git rev-parse --verify origin/$BRANCH_NAME >/dev/null 2>&1; then
-            git checkout -b $BRANCH_NAME origin/$BRANCH_NAME
-          elif git show-ref --verify --quiet refs/heads/$BRANCH_NAME; then
-            git checkout $BRANCH_NAME
+          git remote set-url origin https://x-access-token:${{ secrets.GH_PAT }}@github.com/${{ github.repository }}
+          
+          # Verificar si la rama existe en origin
+          if git ls-remote --exit-code --heads origin $BRANCH_NAME; then
+              echo "Branch $BRANCH_NAME exists in origin."
           else
-            echo "Error: branch $BRANCH_NAME not found locally or in origin."
-            exit 1
+              echo "Error: branch $BRANCH_NAME not found in origin."
+              exit 1
           fi
+          
+          # Checkout de la rama, creándola si no existe localmente
+          git fetch origin $BRANCH_NAME:$BRANCH_NAME
+          git checkout $BRANCH_NAME
+          
+          # Obtener cambios más recientes de la rama en origin
           git pull origin $BRANCH_NAME
+          
+          # Realizar los cambios necesarios
           git add version.txt
           git commit -m "Increment version to ${{ env.NEW_VERSION }}"
           git tag ${{ env.NEW_VERSION }}
+          
+          # Hacer push del commit y del tag
           git push origin ${{ env.NEW_VERSION }}
           git push origin $BRANCH_NAME
+
 
       - name: Upload Version Artifact
         uses: actions/upload-artifact@v4
