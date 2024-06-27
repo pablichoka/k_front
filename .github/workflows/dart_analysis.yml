@@ -64,8 +64,9 @@ jobs:
           VERSIONING: ${{ secrets.VERSIONING }}
         run: |
           git remote set-url origin https://x-access-token:${{ secrets.VERSIONING }}@github.com/${{ github.repository }}
-          BRANCH_NAME=${{ github.head_ref || github.ref_name }}
-          if git rev-parse --verify origin/$BRANCH_NAME; then
+          BRANCH_NAME="${{ github.head_ref || github.base_ref || github.ref_name }}"
+          echo "Branch name is $BRANCH_NAME"
+          if git rev-parse --verify origin/$BRANCH_NAME >/dev/null 2>&1; then
             git checkout -b $BRANCH_NAME origin/$BRANCH_NAME
           elif git show-ref --verify --quiet refs/heads/$BRANCH_NAME; then
             git checkout $BRANCH_NAME
