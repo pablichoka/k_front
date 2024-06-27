@@ -64,11 +64,14 @@ jobs:
           VERSIONING: ${{ secrets.VERSIONING }}
         run: |
           git remote set-url origin https://x-access-token:${{ secrets.VERSIONING }}@github.com/${{ github.repository }}
-          BRANCH_NAME=${{ github.ref_name }}
-          if git show-ref --verify --quiet refs/heads/$BRANCH_NAME; then
+          BRANCH_NAME=${{ github.head_ref || github.ref_name }}
+          if git rev-parse --verify origin/$BRANCH_NAME; then
+            git checkout -b $BRANCH_NAME origin/$BRANCH_NAME
+          elif git show-ref --verify --quiet refs/heads/$BRANCH_NAME; then
             git checkout $BRANCH_NAME
           else
-            git checkout -b $BRANCH_NAME origin/$BRANCH_NAME
+            echo "Error: branch $BRANCH_NAME not found locally or in origin."
+            exit 1
           fi
           git pull origin $BRANCH_NAME
           git add version.txt
@@ -112,7 +115,7 @@ jobs:
           echo "VERSION=${VERSION}" >> $GITHUB_ENV
 
       - name: Create Release
-        if: github.ref_name == 'main'
+        if: github.base_ref == 'main'
         uses: softprops/action-gh-release@v2
         with:
           files: build/app/outputs/apk/release/app-release.apk
@@ -120,7 +123,7 @@ jobs:
           name: "Release ${{ env.VERSION }}"
 
       - name: Create Pre-Release
-        if: github.ref_name == 'development'
+        if: github.base_ref == 'development'
         uses: softprops/action-gh-release@v2
         with:
           files: build/app/outputs/apk/release/app-release.apk
