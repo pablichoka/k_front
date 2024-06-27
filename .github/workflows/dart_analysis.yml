@@ -64,13 +64,13 @@ jobs:
           VERSIONING: ${{ secrets.VERSIONING }}
         run: |
           git remote set-url origin https://x-access-token:${{ secrets.VERSIONING }}@github.com/${{ github.repository }}
-          git checkout development  
-          git pull origin development
+          git checkout ${{ github.ref_name }}
+          git pull origin ${{ github.ref_name }}
           git add version.txt
           git commit -m "Increment version to ${{ env.NEW_VERSION }}"
           git tag ${{ env.NEW_VERSION }}
           git push origin ${{ env.NEW_VERSION }}
-          git push origin development
+          git push origin ${{ github.ref_name }}
 
       - name: Upload Version Artifact
         uses: actions/upload-artifact@v4
@@ -84,6 +84,9 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+
+      - name: Wait for Version Artifact
+        run: sleep 10
 
       - name: Download APK Artifact
         uses: actions/download-artifact@v4
@@ -104,7 +107,7 @@ jobs:
           echo "VERSION=${VERSION}" >> $GITHUB_ENV
 
       - name: Create Release
-        if: github.base_ref == 'main'
+        if: github.ref_name == 'main'
         uses: softprops/action-gh-release@v2
         with:
           files: build/app/outputs/apk/release/app-release.apk
@@ -112,7 +115,7 @@ jobs:
           name: "Release ${{ env.VERSION }}"
 
       - name: Create Pre-Release
-        if: github.base_ref == 'development'
+        if: github.ref_name == 'development'
         uses: softprops/action-gh-release@v2
         with:
           files: build/app/outputs/apk/release/app-release.apk
