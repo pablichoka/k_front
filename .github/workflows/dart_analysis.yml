@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4.1.7
+        uses: actions/checkout@v4
 
       - name: Set up Flutter
         uses: subosito/flutter-action@v2.16.0
@@ -26,7 +26,7 @@ jobs:
         run: flutter build apk
 
       - name: Upload APK Artifact
-        uses: actions/upload-artifact@v4.3.3
+        uses: actions/upload-artifact@v4
         with:
           name: apk
           path: build/app/outputs/apk/release/app-release.apk
@@ -36,7 +36,7 @@ jobs:
     needs: build
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4.1.7
+        uses: actions/checkout@v4
         with:
           token: ${{ secrets.VERSIONING }}
 
@@ -70,11 +70,10 @@ jobs:
           git commit -m "Increment version to ${{ env.NEW_VERSION }}"
           git tag ${{ env.NEW_VERSION }}
           git push origin ${{ env.NEW_VERSION }}
-          git push origin development 
-
+          git push origin development
 
       - name: Upload Version Artifact
-        uses: actions/upload-artifact@v4.3.3
+        uses: actions/upload-artifact@v4
         with:
           name: version
           path: version.txt
@@ -84,33 +83,39 @@ jobs:
     needs: [build, versioning]
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4.1.7
+        uses: actions/checkout@v4
 
       - name: Download APK Artifact
-        uses: actions/download-artifact@v4.1.7
+        uses: actions/download-artifact@v4
         with:
           name: apk
           path: build/app/outputs/apk/release
 
       - name: Download Version Artifact
-        uses: actions/download-artifact@v4.1.7
+        uses: actions/download-artifact@v4
         with:
           name: version
           path: .
 
+      - name: Get version from file
+        id: get_version
+        run: |
+          VERSION=$(cat version.txt)
+          echo "VERSION=${VERSION}" >> $GITHUB_ENV
+
       - name: Create Release
         if: github.base_ref == 'main'
-        uses: softprops/action-gh-release@v2.0.6
+        uses: softprops/action-gh-release@v2
         with:
           files: build/app/outputs/apk/release/app-release.apk
-          tag_name: ${{ env.NEW_VERSION }}
-          name: "Release ${{ env.NEW_VERSION }}"
+          tag_name: ${{ env.VERSION }}
+          name: "Release ${{ env.VERSION }}"
 
       - name: Create Pre-Release
         if: github.base_ref == 'development'
-        uses: softprops/action-gh-release@v2.0.6
+        uses: softprops/action-gh-release@v2
         with:
           files: build/app/outputs/apk/release/app-release.apk
-          tag_name: ${{ env.NEW_VERSION }}
-          name: "Pre-Release ${{ env.NEW_VERSION }}"
+          tag_name: ${{ env.VERSION }}
+          name: "Pre-Release ${{ env.VERSION }}"
           prerelease: true
