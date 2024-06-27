@@ -60,14 +60,14 @@ jobs:
           echo $NEW_VERSION > version.txt
 
       - name: Commit and tag version
-        env:
-          VERSIONING: ${{ secrets.VERSIONING }}
         run: |
+          git remote set-url origin https://x-access-token:${{ secrets.VERSIONING }}@github.com/${{ github.repository }}
           git add version.txt
           git commit -m "Increment version to ${{ env.NEW_VERSION }}"
           git tag ${{ env.NEW_VERSION }}
           git push origin ${{ env.NEW_VERSION }}
-          git push
+          git push origin HEAD:$(git rev-parse --abbrev-ref HEAD)
+
 
   create-release:
     runs-on: ubuntu-latest
