@@ -68,6 +68,7 @@ jobs:
           git commit -m "Increment version to ${{ env.NEW_VERSION }}"
           git tag ${{ env.NEW_VERSION }}
           git push origin ${{ env.NEW_VERSION }}
+          git pull
           git push origin HEAD:refs/heads/development
 
       - name: Upload Version Artifact
