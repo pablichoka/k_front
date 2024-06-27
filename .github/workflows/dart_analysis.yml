@@ -43,41 +43,27 @@ jobs:
           git config --global user.name 'github-actions'
           git config --global user.email 'github-actions@github.com'
 
-      - name: Get current version
+       - name: Get current version from file
         id: get_version
-        run: echo "VERSION=$(cat version.txt)" >> $GITHUB_ENV
+        run: |
+          VERSION=$(cat version.txt)
+          echo "VERSION=${VERSION}" >> $GITHUB_ENV
 
       - name: Increment version
         id: increment_version
         run: |
           VERSION=${{ env.VERSION }}
-          if [ "${{ github.base_ref }}" = "main" ]; then
-            VERSION=$(echo $VERSION | awk -F. -v OFS=. '{$NF += 0; print}')
-          else
-            VERSION=$(echo $VERSION | awk -F. -v OFS=. '{$NF += 1; print}')
-          fi
-          echo "VERSION=$VERSION" >> $GITHUB_ENV
-          echo $VERSION > version.txt
+          NEW_VERSION=$(echo $VERSION | awk -F. -v OFS=. '{$2 += 1; print}')
+          echo "NEW_VERSION=$NEW_VERSION" >> $GITHUB_ENV
+          echo $NEW_VERSION > version.txt
 
-      - name: Check if version.txt is modified
+      - name: Commit and tag version
         run: |
-          git diff --exit-code version.txt
-        continue-on-error: true
-
-      - name: Commit updated version
-        if: steps.increment_version.outputs.VERSION != env.VERSION
-        run: |
-          git checkout -b version-bump
           git add version.txt
-          git commit -m "Increment version to ${{ env.VERSION }}"
-          git push origin version-bump
-          git checkout ${{ github.head_ref }}
-
-      - name: Upload Version Artifact
-        uses: actions/upload-artifact@v4.3.3
-        with:
-          name: version
-          path: version.txt
+          git commit -m "Increment version to ${{ env.NEW_VERSION }}"
+          git tag ${{ env.NEW_VERSION }}
+          git push origin ${{ env.NEW_VERSION }}
+          git push
 
   create-release:
     runs-on: ubuntu-latest
@@ -103,17 +89,14 @@ jobs:
         uses: softprops/action-gh-release@v2.0.6
         with:
           files: build/app/outputs/apk/release/app-release.apk
-          tag_name: ${{ env.VERSION }}
-          release_name: Release ${{ env.VERSION }}
-          draft: false
-          prerelease: false
+          tag_name: ${{ env.NEW_VERSION }}
+          name: "Release ${{ env.NEW_VERSION }}"
 
       - name: Create Pre-Release
         if: github.base_ref == 'development'
         uses: softprops/action-gh-release@v2.0.6
         with:
           files: build/app/outputs/apk/release/app-release.apk
-          tag_name: ${{ env.VERSION }}-pre
-          release_name: Pre-Release ${{ env.VERSION }}-pre
-          draft: false
+          tag_name: ${{ env.NEW_VERSION }}
+          name: "Pre-Release ${{ env.NEW_VERSION }}"
           prerelease: true
