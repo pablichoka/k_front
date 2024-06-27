@@ -1,15 +1,17 @@
-name: Dart analysis
+name: CI Workflow
 
 on:
   pull_request:
+    branches:
+      - development
+      - main
 
 jobs:
   build:
-    name: flutter-check
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4.1.7
+        uses: actions/checkout@v4
 
       - name: Set up Flutter
         uses: subosito/flutter-action@v2.16.0
@@ -21,12 +23,99 @@ jobs:
         uses: zgosalvez/github-actions-analyze-dart@v3.0.3
 
       - name: Build apk
-        if: github.base_ref == 'main'
         run: flutter build apk
 
-      - name: Release apk
-        if: github.base_ref == 'main'
-        uses: actions/upload-artifact@v1
+      - name: Upload APK Artifact
+        uses: actions/upload-artifact@v4
         with:
-          name: release-apk
+          name: apk
           path: build/app/outputs/apk/release/app-release.apk
+
+  versioning:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.VERSIONING }}
+
+      - name: Set up Git
+        run: |
+          git config --global user.name 'github-actions'
+          git config --global user.email 'github-actions@github.com'
+
+      - name: Get current version from file
+        id: get_version
+        run: |
+          VERSION=$(cat version.txt)
+          echo "VERSION=${VERSION}" >> $GITHUB_ENV
+
+      - name: Increment version
+        id: increment_version
+        run: |
+          VERSION=${{ env.VERSION }}
+          NEW_VERSION=$(echo $VERSION | awk -F. -v OFS=. '{$2 += 1; print}')
+          echo "NEW_VERSION=$NEW_VERSION" >> $GITHUB_ENV
+          echo $NEW_VERSION > version.txt
+
+      - name: Commit and tag version
+        env:
+          VERSIONING: ${{ secrets.VERSIONING }}
+        run: |
+          git remote set-url origin https://x-access-token:${{ secrets.VERSIONING }}@github.com/${{ github.repository }}
+          git checkout development  
+          git pull origin development
+          git add version.txt
+          git commit -m "Increment version to ${{ env.NEW_VERSION }}"
+          git tag ${{ env.NEW_VERSION }}
+          git push origin ${{ env.NEW_VERSION }}
+          git push origin development
+
+      - name: Upload Version Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: version
+          path: version.txt
+
+  create-release:
+    runs-on: ubuntu-latest
+    needs: [build, versioning]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Download APK Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: apk
+          path: build/app/outputs/apk/release
+
+      - name: Download Version Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: version
+          path: .
+
+      - name: Get version from file
+        id: get_version
+        run: |
+          VERSION=$(cat version.txt)
+          echo "VERSION=${VERSION}" >> $GITHUB_ENV
+
+      - name: Create Release
+        if: github.base_ref == 'main'
+        uses: softprops/action-gh-release@v2
+        with:
+          files: build/app/outputs/apk/release/app-release.apk
+          tag_name: ${{ env.VERSION }}
+          name: "Release ${{ env.VERSION }}"
+
+      - name: Create Pre-Release
+        if: github.base_ref == 'development'
+        uses: softprops/action-gh-release@v2
+        with:
+          files: build/app/outputs/apk/release/app-release.apk
+          tag_name: ${{ env.VERSION }}
+          name: "Pre-Release ${{ env.VERSION }}"
+          prerelease: true
