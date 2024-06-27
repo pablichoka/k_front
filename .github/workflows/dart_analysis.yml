@@ -132,12 +132,15 @@ jobs:
           files: build/app/outputs/apk/release/app-release.apk
           tag_name: ${{ env.VERSION }}
           name: "Release ${{ env.VERSION }}"
+          token: ${{ secrets.VERSIONING }}
 
       - name: Create Pre-Release
         if: github.base_ref == 'development'
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v2.0.6
         with:
           files: build/app/outputs/apk/release/app-release.apk
-          tag_name: ${{ env.VERSION }}
-          name: "Pre-Release ${{ env.VERSION }}"
+          tag_name: ${{ env.NEW_VERSION }}
+          name: "Pre-Release ${{ env.NEW_VERSION }}"
           prerelease: true
+          token: ${{ secrets.VERSIONING }}
+
