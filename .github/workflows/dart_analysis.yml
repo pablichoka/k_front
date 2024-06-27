@@ -43,7 +43,7 @@ jobs:
           git config --global user.name 'github-actions'
           git config --global user.email 'github-actions@github.com'
 
-       - name: Get current version from file
+      - name: Get current version from file
         id: get_version
         run: |
           VERSION=$(cat version.txt)
