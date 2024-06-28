@@ -62,7 +62,7 @@ jobs:
         env:
           VERSIONING: ${{ secrets.VERSIONING }}
         run: |
-          git remote set-url origin https://x-access-token:${GH_PAT}@github.com/${{ github.repository }}
+          git remote set-url origin https://x-access-token:${VERSIONING}@github.com/${{ github.repository }}
           git push origin ${{ steps.create_version_tag.outputs.TAG_NAME }}
 
   create-release:
