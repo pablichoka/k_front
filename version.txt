@@ -1,5 +1,1 @@
-<<<<<<< Updated upstream
 1.0
-=======
-1.1
->>>>>>> Stashed changes
