@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.7
 
       - name: Set up Flutter
         uses: subosito/flutter-action@v2.16.0
@@ -26,7 +26,7 @@ jobs:
         run: flutter build apk
 
       - name: Upload APK Artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v4.3.3
         with:
           name: apk
           path: build/app/outputs/apk/release/app-release.apk
@@ -36,7 +36,7 @@ jobs:
     needs: build
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.7
         with:
           token: ${{ secrets.VERSIONING }}
 
@@ -59,7 +59,10 @@ jobs:
           echo "NEW_VERSION=$NEW_VERSION" >> $GITHUB_ENV
           echo $NEW_VERSION > version.txt
 
-      - name: Checkout, Commit, Tag and Push
+      - name: Commit, Tag, and Push
+        env:
+          GH_PAT: ${{ secrets.VERSIONING }}
+          NEW_VERSION: ${{ env.NEW_VERSION }}
         run: |
           git remote set-url origin https://x-access-token:${{ secrets.GH_PAT }}@github.com/${{ github.repository }}
           
@@ -78,12 +81,14 @@ jobs:
           git fetch origin ${{ github.base_ref }}:${{ github.base_ref }}
           git checkout ${{ github.base_ref }}
           
-          # Apply stashed changes
-          git stash pop
-          
           # Obtener cambios más recientes de la rama en origin
           git pull origin ${{ github.base_ref }}
           
+          # Apply stashed changes and resolve conflicts automatically
+          git stash pop || true
+          git add version.txt
+          git commit -m "Resolve conflict in version.txt" || true
+
           # Realizar los cambios necesarios
           git add version.txt
           git commit -m "Increment version to ${{ env.NEW_VERSION }}"
@@ -92,12 +97,9 @@ jobs:
           # Hacer push del commit y del tag
           git push origin ${{ env.NEW_VERSION }}
           git push origin ${{ github.base_ref }}
-        env:
-          GH_PAT: ${{ secrets.VERSIONING }}
-          NEW_VERSION: ${{ env.NEW_VERSION }}
 
       - name: Upload Version Artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v4.3.3
         with:
           name: version
           path: version.txt
@@ -107,37 +109,27 @@ jobs:
     needs: [build, versioning]
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Wait for Version Artifact
-        run: sleep 10
+        uses: actions/checkout@v4.1.7
 
       - name: Download APK Artifact
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v4.1.7
         with:
           name: apk
           path: build/app/outputs/apk/release
 
       - name: Download Version Artifact
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v4.1.7
         with:
           name: version
           path: .
 
-      - name: Get version from file
-        id: get_version
-        run: |
-          VERSION=$(cat version.txt)
-          echo "VERSION=${VERSION}" >> $GITHUB_ENV
-
       - name: Create Release
         if: github.base_ref == 'main'
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v2.0.6
         with:
           files: build/app/outputs/apk/release/app-release.apk
-          tag_name: ${{ env.VERSION }}
-          name: "Release ${{ env.VERSION }}"
-          token: ${{ secrets.VERSIONING }}
+          tag_name: ${{ env.NEW_VERSION }}
+          name: "Release ${{ env.NEW_VERSION }}"
 
       - name: Create Pre-Release
         if: github.base_ref == 'development'
@@ -147,5 +139,3 @@ jobs:
           tag_name: ${{ env.NEW_VERSION }}
           name: "Pre-Release ${{ env.NEW_VERSION }}"
           prerelease: true
-          token: ${{ secrets.VERSIONING }}
-
