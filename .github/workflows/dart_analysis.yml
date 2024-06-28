@@ -62,7 +62,7 @@ jobs:
         env:
           VERSIONING: ${{ secrets.VERSIONING }}
         run: |
-          git remote set-url origin https://x-access-token:${VERSIONING}@github.com/${{ github.repository }}
+          git remote set-url origin https://x-access-token:${{ secrets.VERSIONING }}@github.com/${{ github.repository }}
           git push origin ${{ steps.create_version_tag.outputs.TAG_NAME }}
 
   create-release:
@@ -73,16 +73,18 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Read latest tag from versioning job
-        id: read_latest_tag
-        run: echo "LATEST_TAG=${{ needs.versioning.outputs.TAG_NAME }}" >> $GITHUB_ENV
+      - name: Get latest tag
+        id: tag
+        uses: dawidd6/action-get-tag@v1
+        with:
+          strip_v: false
 
       - name: Create Release
         uses: softprops/action-gh-release@v1
         with:
           files: build/app/outputs/apk/release/app-release.apk
-          tag_name: ${{ needs.versioning.outputs.TAG_NAME }}
-          name: "Release ${{ needs.versioning.outputs.TAG_NAME }}"
+          tag_name: ${{ steps.get_latest_tag.outputs.tag }}
+          name: "Release ${{ steps.get_latest_tag.outputs.tag }}"
           prerelease: false
         env:
           VERSIONING: ${{ secrets.VERSIONING }}
