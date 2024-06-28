@@ -37,106 +37,74 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.VERSIONING }}
 
-      - name: Set up Git
-        run: |
-          git config --global user.name 'github-actions'
-          git config --global user.email 'github-actions@github.com'
-
-      - name: Get current version from file
-        id: get_version
+      - name: Read current version from file
+        id: read_version
         run: |
           VERSION=$(cat version.txt)
-          echo "VERSION=${VERSION}" >> $GITHUB_ENV
-          echo "VERSION=${VERSION}"
+          echo "CURRENT_VERSION=${VERSION}" >> $GITHUB_ENV
+          echo "::set-output name=CURRENT_VERSION::${VERSION}"
 
-      - name: Increment version
-        id: increment_version
+      - name: Create new version tag
+        id: create_version_tag
         run: |
-          VERSION=${{ steps.get_version.outputs.VERSION }}
-          NEW_VERSION=$(echo $VERSION | awk -F. -v OFS=. '{$2 += 1; print}')
-          echo "NEW_VERSION=$NEW_VERSION" >> $GITHUB_ENV
-          echo "NEW_VERSION=$NEW_VERSION"
-          echo $NEW_VERSION > version.txt
-        outputs:
-          NEW_VERSION: ${{ steps.increment_version.outputs.NEW_VERSION }}
+          # Use current version from file to create tag
+          git tag v${{ steps.read_version.outputs.CURRENT_VERSION }}
+          echo "::set-output name=TAG_NAME::v${{ steps.read_version.outputs.CURRENT_VERSION }}"
 
-      - name: Commit, Tag, and Push
+      - name: Increment version in file
+        run: |
+          # Increment version number in version.txt
+          CURRENT_VERSION=$((${{ steps.read_version.outputs.CURRENT_VERSION }} + 1))
+          echo "${CURRENT_VERSION}" > version.txt
+
+      - name: Push tag to repository
         env:
-          GH_PAT: ${{ secrets.VERSIONING }}
-          NEW_VERSION: ${{ steps.increment_version.outputs.NEW_VERSION }}
+          GH_PAT: ${{ secrets.GH_PAT }}
         run: |
-          git remote set-url origin https://x-access-token:${{ secrets.GH_PAT }}@github.com/${{ github.repository }}
-          
-          # Verificar si la rama existe en origin
-          if git ls-remote --exit-code --heads origin ${{ github.base_ref }}; then
-              echo "Branch ${{ github.base_ref }} exists in origin."
-          else
-              echo "Error: branch ${{ github.base_ref }} not found in origin."
-              exit 1
-          fi
-          
-          # Stash any local changes
-          git stash
-          
-          # Checkout de la rama, creándola si no existe localmente
-          git fetch origin ${{ github.base_ref }}:${{ github.base_ref }}
-          git checkout ${{ github.base_ref }}
-          
-          # Obtener cambios más recientes de la rama en origin
-          git pull origin ${{ github.base_ref }}
-          
-          # Apply stashed changes
-          git stash pop || true
-          
-          # Realizar los cambios necesarios
-          git add version.txt
-          git commit -m "Increment version to ${{ env.NEW_VERSION }}"
-          git tag ${{ env.NEW_VERSION }}
-          
-          # Hacer push del commit y del tag
-          git push origin ${{ env.NEW_VERSION }}
-          git push origin ${{ github.base_ref }}
-
-      - name: Upload Version Artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: version
-          path: version.txt
+          git remote set-url origin https://x-access-token:${GH_PAT}@github.com/${{ github.repository }}
+          git push origin ${{ steps.create_version_tag.outputs.TAG_NAME }}
 
   create-release:
     runs-on: ubuntu-latest
-    needs: [build, versioning]
+    needs: versioning
+    if: ${{ github.event_name == 'pull_request' && github.base_ref == 'main' }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Download APK Artifact
-        uses: actions/download-artifact@v3
-        with:
-          name: apk
-          path: build/app/outputs/apk/release
+      - name: Read latest tag from versioning job
+        id: read_latest_tag
+        run: echo "LATEST_TAG=${{ needs.versioning.outputs.TAG_NAME }}" >> $GITHUB_ENV
 
-      - name: Download Version Artifact
-        uses: actions/download-artifact@v3
-        with:
-          name: version
-          path: .
-
-      - name: Read version from file
-        id: read_version
-        run: |
-          VERSION=$(cat version.txt)
-          echo "VERSION=${VERSION}" >> $GITHUB_ENV
-          
       - name: Create Release
         uses: softprops/action-gh-release@v1
         with:
           files: build/app/outputs/apk/release/app-release.apk
-          tag_name: ${{ env.VERSION }}
-          name: "Release ${{ env.VERSION }}"
-          prerelease: ${{ github.base_ref == 'development' }}
+          tag_name: ${{ needs.versioning.outputs.TAG_NAME }}
+          name: "Release ${{ needs.versioning.outputs.TAG_NAME }}"
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  create-prerelease:
+    runs-on: ubuntu-latest
+    needs: versioning
+    if: ${{ github.event_name == 'pull_request' && github.base_ref == 'development' }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Read latest tag from versioning job
+        id: read_latest_tag
+        run: echo "LATEST_TAG=${{ needs.versioning.outputs.TAG_NAME }}" >> $GITHUB_ENV
+
+      - name: Create Prerelease
+        uses: softprops/action-gh-release@v1
+        with:
+          files: build/app/outputs/apk/release/app-release.apk
+          tag_name: ${{ needs.versioning.outputs.TAG_NAME }}
+          name: "Pre-Release ${{ needs.versioning.outputs.TAG_NAME }}"
+          prerelease: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
