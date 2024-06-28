@@ -3,8 +3,8 @@ name: CI Workflow
 on:
   pull_request:
     branches:
-      - development
       - main
+      - development
 
 jobs:
   build:
@@ -87,13 +87,6 @@ jobs:
           # Apply stashed changes
           git stash pop || true
           
-          # Resolver conflicto de forma automatica si lo hay
-          git mergetool -y || true
-          
-          # Asegurarse de que version.txt este en el commit
-          git add version.txt
-          git commit -m "Resolve conflict in version.txt" || true
-
           # Realizar los cambios necesarios
           git add version.txt
           git commit -m "Increment version to ${{ env.NEW_VERSION }}"
@@ -129,18 +122,9 @@ jobs:
           path: .
 
       - name: Create Release
-        if: github.base_ref == 'main'
         uses: softprops/action-gh-release@v1
         with:
           files: build/app/outputs/apk/release/app-release.apk
           tag_name: ${{ env.NEW_VERSION }}
           name: "Release ${{ env.NEW_VERSION }}"
-
-      - name: Create Pre-Release
-        if: github.base_ref == 'development'
-        uses: softprops/action-gh-release@v1
-        with:
-          files: build/app/outputs/apk/release/app-release.apk
-          tag_name: ${{ env.NEW_VERSION }}
-          name: "Pre-Release ${{ env.NEW_VERSION }}"
-          prerelease: true
+          prerelease: ${{ github.base_ref == 'development' }}
