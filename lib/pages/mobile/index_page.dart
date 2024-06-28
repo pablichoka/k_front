@@ -37,7 +37,7 @@ Scaffold mobileIndex(BuildContext context) {
                 children: <Widget>[
                   Card(
                       borderOnForeground: true,
-                      color: Theme.of(context).secondaryHeaderColor,
+                      color: Theme.of(context).primaryColor,
                       child: TextButton(
                           style: ButtonStyle(
                               padding: WidgetStateProperty.all<EdgeInsets>(
