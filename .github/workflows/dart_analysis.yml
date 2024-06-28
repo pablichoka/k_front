@@ -11,22 +11,22 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4.1.7
+        uses: actions/checkout@v4
 
       - name: Set up Flutter
-        uses: subosito/flutter-action@v2.16.0
+        uses: subosito/flutter-action@v2
 
       - name: Install dependencies
         run: flutter pub get
 
       - name: Analyze Dart
-        uses: zgosalvez/github-actions-analyze-dart@v3.0.3
+        uses: zgosalvez/github-actions-analyze-dart@v3
 
       - name: Build apk
         run: flutter build apk
 
       - name: Upload APK Artifact
-        uses: actions/upload-artifact@v4.3.3
+        uses: actions/upload-artifact@v3
         with:
           name: apk
           path: build/app/outputs/apk/release/app-release.apk
@@ -36,7 +36,7 @@ jobs:
     needs: build
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4.1.7
+        uses: actions/checkout@v4
         with:
           token: ${{ secrets.VERSIONING }}
 
@@ -84,8 +84,13 @@ jobs:
           # Obtener cambios más recientes de la rama en origin
           git pull origin ${{ github.base_ref }}
           
-          # Apply stashed changes and resolve conflicts automatically
+          # Apply stashed changes
           git stash pop || true
+          
+          # Resolver conflicto de forma automatica si lo hay
+          git mergetool -y || true
+          
+          # Asegurarse de que version.txt este en el commit
           git add version.txt
           git commit -m "Resolve conflict in version.txt" || true
 
@@ -99,7 +104,7 @@ jobs:
           git push origin ${{ github.base_ref }}
 
       - name: Upload Version Artifact
-        uses: actions/upload-artifact@v4.3.3
+        uses: actions/upload-artifact@v3
         with:
           name: version
           path: version.txt
@@ -109,23 +114,23 @@ jobs:
     needs: [build, versioning]
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4.1.7
+        uses: actions/checkout@v4
 
       - name: Download APK Artifact
-        uses: actions/download-artifact@v4.1.7
+        uses: actions/download-artifact@v3
         with:
           name: apk
           path: build/app/outputs/apk/release
 
       - name: Download Version Artifact
-        uses: actions/download-artifact@v4.1.7
+        uses: actions/download-artifact@v3
         with:
           name: version
           path: .
 
       - name: Create Release
         if: github.base_ref == 'main'
-        uses: softprops/action-gh-release@v2.0.6
+        uses: softprops/action-gh-release@v1
         with:
           files: build/app/outputs/apk/release/app-release.apk
           tag_name: ${{ env.NEW_VERSION }}
@@ -133,7 +138,7 @@ jobs:
 
       - name: Create Pre-Release
         if: github.base_ref == 'development'
-        uses: softprops/action-gh-release@v2.0.6
+        uses: softprops/action-gh-release@v1
         with:
           files: build/app/outputs/apk/release/app-release.apk
           tag_name: ${{ env.NEW_VERSION }}
