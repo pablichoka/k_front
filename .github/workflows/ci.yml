@@ -66,32 +66,18 @@ jobs:
         run: |
           CURRENT_VERSION=${{ steps.read_version.outputs.CURRENT_VERSION }}
           NEW_VERSION=$(echo $CURRENT_VERSION | awk -F. -v OFS=. '{$2 += 1; print $1"."$2}')
+          echo "NEW_VERSION=${NEW_VERSION}" >> $GITHUB_ENV
           echo ${NEW_VERSION}
 
-      - name: Write new version in file 1
+
+      - name: Write new version in file
         uses: "DamianReeves/write-file-action@master"
         with:
           path: version.txt
           write-mode: overwrite
           contents: |
-            echo ${NEW_VERSION}
-
-      - name: Commit & Push to main
-        uses: Andro999b/push@v1.3
-        with:
-          github_token: ${{ secrets.VERSIONING }}
-          branch: main
-          force: true
-          message: 'Overwritten by Github Actions'
-
-      - name: Write new version in file 2
-        uses: "DamianReeves/write-file-action@master"
-        with:
-          path: version.txt
-          write-mode: overwrite
-          contents: |
-            echo ${NEW_VERSION}
-
+            ${{ env.NEW_VERSION }}
+          
       - name: Commit & Push to dev
         uses: Andro999b/push@v1.3
         with:
