@@ -64,8 +64,9 @@ jobs:
 
       - name: Increment version in file
         run: |
-          CURRENT_VERSION=$((${{ steps.read_version.outputs.CURRENT_VERSION }} + 1))
-          echo "${CURRENT_VERSION}" > version.txt
+          CURRENT_VERSION=${{ steps.read_version.outputs.CURRENT_VERSION }}
+          NEW_VERSION=$(echo $CURRENT_VERSION | awk -F. -v OFS=. '{$2 += 1; $2 = sprintf("%.1f", $2 / 10); if ($2 >= 1) {$1 += 1; $2 = 0} print}')
+          echo "${NEW_VERSION}" > version.txt
 
       - name: Push tag to repository
         if: steps.check_tag.outputs.tag_exists == 'false'
@@ -84,7 +85,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          
+
       - name: Download APK Artifact
         uses: actions/download-artifact@v3
         with:
