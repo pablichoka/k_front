@@ -65,24 +65,40 @@ jobs:
       - name: Increment version
         run: |
           CURRENT_VERSION=${{ steps.read_version.outputs.CURRENT_VERSION }}
-          NEW_VERSION=$(echo $CURRENT_VERSION | awk -F. -v OFS=. '{$2 += 1; $2 = sprintf("%.1f", $2 / 10); if ($2 >= 1) {$1 += 1; $2 = 0} print}')
+          NEW_VERSION=$(echo $CURRENT_VERSION | awk -F. -v OFS=. '{$2 += 1; print $1"."$2}')
           echo ${NEW_VERSION}
 
-      - name: Write new version in file
+      - name: Write new version in file 1
         uses: "DamianReeves/write-file-action@master"
         with:
           path: version.txt
           write-mode: overwrite
           contents: |
-            ${NEW_VERSION}
+            echo ${NEW_VERSION}
 
-      - name: Commit & Push
+      - name: Commit & Push to main
         uses: Andro999b/push@v1.3
         with:
           github_token: ${{ secrets.VERSIONING }}
-          branch: ${{github.base_ref}}
+          branch: main
           force: true
-          message: 'Overwritten by Github Actions - ${date}'
+          message: 'Overwritten by Github Actions'
+
+      - name: Write new version in file 2
+        uses: "DamianReeves/write-file-action@master"
+        with:
+          path: version.txt
+          write-mode: overwrite
+          contents: |
+            echo ${NEW_VERSION}
+
+      - name: Commit & Push to dev
+        uses: Andro999b/push@v1.3
+        with:
+          github_token: ${{ secrets.VERSIONING }}
+          branch: development
+          force: true
+          message: 'Overwritten by Github Actions'
 
       - name: Push tag to repository
         if: steps.check_tag.outputs.tag_exists == 'false'
