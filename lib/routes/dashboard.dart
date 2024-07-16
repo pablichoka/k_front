@@ -61,8 +61,8 @@ class _Dashboard extends State<Dashboard> {
     //     .setExtended(MediaQuery.of(context).size.width > 600 ? true : false);
     return Scaffold(
       body: Row(children: [
-        dashboardSidebar(
-            context, _sidebarController, _currentScreen, _changeScreen),
+        // dashboardSidebar(
+        //     context, _sidebarController, _currentScreen, _changeScreen),
         Expanded(
             child: Center(
           child: _currentScreen,
