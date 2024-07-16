@@ -40,6 +40,7 @@ class TabletLoginFormState extends State<TabletLoginForm> {
         }
         return null;
       },
+      autovalidateMode: AutovalidateMode.onUserInteraction,
       onSaved: onSave,
       obscureText: obscureText,
       decoration: InputDecoration(

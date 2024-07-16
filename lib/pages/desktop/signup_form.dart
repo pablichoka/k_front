@@ -344,7 +344,7 @@ class DesktopSignUpPageState extends State<DesktopSignUpPage> {
             if (regex2.hasMatch(value)) {
               return 'Password contains invalid symbols';
             } else if (!regex.hasMatch(value)) {
-              return 'Password requires 8 characters, one uppercase letter and one number';
+              return 'Minimum 8 characters, one uppercase letter and one number';
             }
             return null;
           },
