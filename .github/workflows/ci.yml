@@ -66,7 +66,7 @@ jobs:
         run: |
           CURRENT_VERSION=${{ steps.read_version.outputs.CURRENT_VERSION }}
           NEW_VERSION=$(echo $CURRENT_VERSION | awk -F. -v OFS=. '{$2 += 1; $2 = sprintf("%.1f", $2 / 10); if ($2 >= 1) {$1 += 1; $2 = 0} print}')
-          echo "${NEW_VERSION}" > version.txt
+          echo ${NEW_VERSION}
 
       - name: Write new version in file
         uses: "DamianReeves/write-file-action@master"
@@ -75,6 +75,14 @@ jobs:
           write-mode: overwrite
           contents: |
             ${NEW_VERSION}
+
+      - name: Commit & Push
+        uses: Andro999b/push@v1.3
+        with:
+          github_token: ${{ secrets.VERSIONING }}
+          branch: ${{github.base_ref}}
+          force: true
+          message: 'Overwritten by Github Actions - ${date}'
 
       - name: Push tag to repository
         if: steps.check_tag.outputs.tag_exists == 'false'
