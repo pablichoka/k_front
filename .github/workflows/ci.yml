@@ -62,11 +62,19 @@ jobs:
           git tag v${{ steps.read_version.outputs.CURRENT_VERSION }}
           echo "::set-output name=TAG_NAME::v${{ steps.read_version.outputs.CURRENT_VERSION }}"
 
-      - name: Increment version in file
+      - name: Increment version
         run: |
           CURRENT_VERSION=${{ steps.read_version.outputs.CURRENT_VERSION }}
           NEW_VERSION=$(echo $CURRENT_VERSION | awk -F. -v OFS=. '{$2 += 1; $2 = sprintf("%.1f", $2 / 10); if ($2 >= 1) {$1 += 1; $2 = 0} print}')
           echo "${NEW_VERSION}" > version.txt
+
+      - name: Write new version in file
+        uses: "DamianReeves/write-file-action@master"
+        with:
+          path: version.txt
+          write-mode: overwrite
+          contents: |
+            ${NEW_VERSION}
 
       - name: Push tag to repository
         if: steps.check_tag.outputs.tag_exists == 'false'
