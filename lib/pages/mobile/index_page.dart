@@ -48,6 +48,7 @@ Scaffold mobileIndex(BuildContext context) {
                                 PageRouteBuilder(
                                   pageBuilder:
                                       (context, animation1, animation2) =>
+                                      //TODO: create signup page for mobiles
                                           const DesktopSignUpPage(),
                                   transitionDuration:
                                       const Duration(milliseconds: 300),
