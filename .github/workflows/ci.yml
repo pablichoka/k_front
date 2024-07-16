@@ -73,7 +73,8 @@ jobs:
         with:
           path: version.txt
           write-mode: overwrite
-          contents: ${NEW_VERSION}
+          contents: |
+              ${{ env.NEW_VERSION }}
           
       - name: Commit & Push to dev
         uses: Andro999b/push@v1.3
