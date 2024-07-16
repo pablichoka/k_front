@@ -20,7 +20,7 @@ class IndexMobileCarrouselState extends State<IndexMobileCarrousel> {
         IconButton(
           iconSize: 10,
           onPressed: () {
-            //FIXME: This is just fucking not working
+            //FIXME: Only works when the dots are inside the carrousel's cards
             _controller.jumpToItem(i);
           },
           icon: Icon(
@@ -64,7 +64,7 @@ class IndexMobileCarrouselState extends State<IndexMobileCarrousel> {
         ),
         Center(
           child: Container(
-            height: MediaQuery.of(context).size.height * 0.2,
+            height: MediaQuery.of(context).size.height * 0.35,
             transform: Matrix4.translationValues(
                 0, MediaQuery.of(context).size.height * 0.40, 0),
             child: ValueListenableBuilder<int>(

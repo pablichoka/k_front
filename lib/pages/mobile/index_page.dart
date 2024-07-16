@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:k_front/pages/mobile/signup_form.dart';
 
-import 'login_form.dart';
-import '../desktop/signup_form.dart';
 import '../../widgets/desktop/background_index.dart';
 import '../../widgets/mobile/carrousel_index.dart';
+import 'login_form.dart';
 
 Scaffold mobileIndex(BuildContext context) {
   return Scaffold(
@@ -20,14 +20,16 @@ Scaffold mobileIndex(BuildContext context) {
                 Center(
                     child: SizedBox(
                         child: Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
-                          child: Text('Welcome to kCal Control',
-                              style: Theme.of(context).textTheme.headlineLarge),
-                        ))),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 40, horizontal: 15),
+                  child: Text('Welcome to kCal Control',
+                      style: Theme.of(context).textTheme.headlineLarge),
+                ))),
                 SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.60,
-                  width: MediaQuery.of(context).size.width,
-                    child: IndexMobileCarrousel(context))],
+                    height: MediaQuery.of(context).size.height * 0.6,
+                    width: MediaQuery.of(context).size.width,
+                    child: IndexMobileCarrousel(context))
+              ],
             )),
         SizedBox(
             height: MediaQuery.of(context).size.height * 0.20,
@@ -37,7 +39,7 @@ Scaffold mobileIndex(BuildContext context) {
                 children: <Widget>[
                   Card(
                       borderOnForeground: true,
-                      color: Theme.of(context).primaryColor,
+                      color: Theme.of(context).colorScheme.tertiary,
                       child: TextButton(
                           style: ButtonStyle(
                               padding: WidgetStateProperty.all<EdgeInsets>(
@@ -48,8 +50,8 @@ Scaffold mobileIndex(BuildContext context) {
                                 PageRouteBuilder(
                                   pageBuilder:
                                       (context, animation1, animation2) =>
-                                      //TODO: create signup page for mobiles
-                                          const DesktopSignUpPage(),
+                                          //TODO: create signup page for mobiles
+                                          const MobileSignUpPage(),
                                   transitionDuration:
                                       const Duration(milliseconds: 300),
                                   transitionsBuilder:
@@ -69,6 +71,7 @@ Scaffold mobileIndex(BuildContext context) {
                               style:
                                   Theme.of(context).textTheme.headlineSmall))),
                   Card(
+                      color: Theme.of(context).colorScheme.primary,
                       child: TextButton(
                           style: ButtonStyle(
                               padding: WidgetStateProperty.all<EdgeInsets>(
@@ -80,8 +83,10 @@ Scaffold mobileIndex(BuildContext context) {
                                     builder: (context) => const LoginPage()));
                           },
                           child: Text('Log in',
-                              style:
-                                  Theme.of(context).textTheme.headlineSmall)))
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headlineSmall
+                                  ?.copyWith(color: Colors.white))))
                 ]))
       ]),
     ]),

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:k_front/controller/impl/api_auth_controller_impl.dart';
 import 'package:k_front/controller/api_auth_controller.dart';
-import 'package:k_front/pages/desktop/signup_form.dart';
+import 'package:k_front/controller/impl/api_auth_controller_impl.dart';
 
 import '../../models/logged_user.dart';
 import '../../routes/dashboard.dart';
@@ -107,15 +106,13 @@ class LoginPageState extends State<LoginPage> {
                     child: Form(
                       key: _formKey,
                       child: Container(
-                          padding:
-                              const EdgeInsets.symmetric(horizontal: 24.0),
+                          padding: const EdgeInsets.symmetric(horizontal: 24.0),
                           decoration: kContainerDecoration.copyWith(
                               color: Theme.of(context).canvasColor),
                           child: SingleChildScrollView(
                             child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment:
-                                    CrossAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: <Widget>[
                                   const SizedBox(height: 20),
                                   const Text(
@@ -186,47 +183,11 @@ class LoginPageState extends State<LoginPage> {
                                   ),
                                   const SizedBox(height: 10),
                                   TextButton(
-                                    onPressed: () {
-                                      Navigator.push(
-                                        context,
-                                        PageRouteBuilder(
-                                          pageBuilder: (context, animation1,
-                                                  animation2) =>
-                                              const DesktopSignUpPage(),
-                                          transitionDuration:
-                                              const Duration(
-                                                  milliseconds: 300),
-                                          transitionsBuilder: (context,
-                                              animation,
-                                              animation2,
-                                              child) {
-                                            final offsetAnimation =
-                                                Tween<Offset>(
-                                              begin: const Offset(1.0, 0.0),
-                                              end: Offset.zero,
-                                            ).animate(animation);
-                                            return SlideTransition(
-                                              position: offsetAnimation,
-                                              child: child,
-                                            );
-                                          },
-                                        ),
-                                      );
-                                    },
-                                    child: Column(
-                                      children: [
-                                        const Text('New User? Sign Up '),
-                                        TextButton(
-                                          onPressed: () {},
-                                          child: const Text(
-                                              'Forgot password?'),
-                                        ),
-                                      ],
-                                    ),
+                                    onPressed: () {},
+                                    child: const Text('Forgot password?'),
                                   ),
                                   Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.center,
                                     children: <Widget>[
                                       TextButton(
                                         onPressed: () {},
