@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:k_front/controller/api_auth_controller.dart';
 import 'package:k_front/controller/impl/api_auth_controller_impl.dart';
 import 'package:k_front/widgets/common/app_bar.dart';
+import 'package:k_front/widgets/common/legal_documents_button.dart';
 
 import '../../models/logged_user.dart';
 import '../../routes/dashboard.dart';
@@ -108,7 +109,7 @@ class TabletLoginFormState extends State<TabletLoginForm> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Container(
-                      width: 900,
+                      width: 700,
                       height: 450,
                       decoration: kContainerDecoration.copyWith(
                         color: Theme.of(context).canvasColor,
@@ -133,6 +134,10 @@ class TabletLoginFormState extends State<TabletLoginForm> {
                                   children: [
                                     Expanded(
                                       child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
                                         children: [
                                           const SizedBox(height: 20),
                                           buildTextField(
@@ -190,6 +195,7 @@ class TabletLoginFormState extends State<TabletLoginForm> {
                                             ),
                                             child: const Text('Sign In'),
                                           ),
+                                          const SizedBox(height: 10),
                                           TextButton(
                                             onPressed: () {},
                                             child:
@@ -199,17 +205,34 @@ class TabletLoginFormState extends State<TabletLoginForm> {
                                       ),
                                     ),
                                     Padding(
-                                      padding: const EdgeInsets.all(24.0),
-                                      child: SizedBox(
-                                        height: 300,
-                                        child: VerticalDivider(
-                                          color:
-                                              Theme.of(context).disabledColor,
-                                          thickness: 1.5,
-                                          width: 1,
-                                          endIndent: 20,
-                                          indent: 20,
-                                        ),
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 20.0),
+                                      child: Column(
+                                        children: [
+                                          SizedBox(
+                                            height: 150,
+                                            child: VerticalDivider(
+                                              color: Theme.of(context)
+                                                  .disabledColor,
+                                              thickness: 1.5,
+                                              width: 1,
+                                              endIndent: 20,
+                                              indent: 20,
+                                            ),
+                                          ),
+                                          const Text('OR'),
+                                          SizedBox(
+                                            height: 150,
+                                            child: VerticalDivider(
+                                              color: Theme.of(context)
+                                                  .disabledColor,
+                                              thickness: 1.5,
+                                              width: 1,
+                                              endIndent: 20,
+                                              indent: 20,
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                     ),
                                     Column(
@@ -221,20 +244,19 @@ class TabletLoginFormState extends State<TabletLoginForm> {
                                           SizedBox(
                                               width: 200,
                                               child: oAuth2Buttons(
-                                                  text: 'Sign up with Google',
+                                                  text: 'Log in with Google',
                                                   icon: Icons.g_mobiledata)),
                                           const SizedBox(height: 15),
                                           SizedBox(
                                               width: 200,
                                               child: oAuth2Buttons(
-                                                  text:
-                                                      'Sign up with Microsoft',
+                                                  text: 'Log in with Microsoft',
                                                   icon: Icons.window)),
                                           const SizedBox(height: 15),
                                           SizedBox(
                                               width: 200,
                                               child: oAuth2Buttons(
-                                                  text: 'Sign up with Apple',
+                                                  text: 'Log in with Apple',
                                                   icon: Icons.apple)),
                                         ])
                                   ],
@@ -243,28 +265,11 @@ class TabletLoginFormState extends State<TabletLoginForm> {
                         ),
                       ),
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        TextButton(
-                          onPressed: () {},
-                          child: Text(
-                              style: Theme.of(context).textTheme.labelSmall,
-                              'Terms and Conditions'),
-                        ),
-                        const Text('|'),
-                        TextButton(
-                          onPressed: () {},
-                          child: Text(
-                              style: Theme.of(context).textTheme.labelSmall,
-                              'Privacy Policy'),
-                        ),
-                      ],
-                    ),
                   ],
                 ),
               ),
             ),
+            legalDocumentsButton(context),
           ],
         ));
   }

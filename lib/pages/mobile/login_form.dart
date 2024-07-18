@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:k_front/controller/api_auth_controller.dart';
 import 'package:k_front/controller/impl/api_auth_controller_impl.dart';
+import 'package:k_front/widgets/common/legal_documents_button.dart';
 
 import '../../models/logged_user.dart';
 import '../../routes/dashboard.dart';
 import '../../themes/theme_data.dart';
 import '../../widgets/common/app_bar.dart';
+import '../../widgets/common/o_auth_buttons.dart';
 import '../../widgets/desktop/background_index.dart';
 
 class LoginPage extends StatefulWidget {
@@ -101,120 +103,154 @@ class LoginPageState extends State<LoginPage> {
             child: SizedBox(
                 width: MediaQuery.of(context).size.width * 0.8,
                 height: MediaQuery.of(context).size.height * 0.8,
-                child: Row(children: <Widget>[
-                  Expanded(
-                    child: Form(
-                      key: _formKey,
-                      child: Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 24.0),
-                          decoration: kContainerDecoration.copyWith(
-                              color: Theme.of(context).canvasColor),
-                          child: SingleChildScrollView(
-                            child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: <Widget>[
-                                  const SizedBox(height: 20),
-                                  const Text(
-                                    'Welcome Back!',
-                                    style: TextStyle(
-                                      fontSize: 24,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  const SizedBox(height: 10),
-                                  const Text(
-                                    'Login to continue',
-                                    style: TextStyle(fontSize: 16),
-                                  ),
-                                  const SizedBox(height: 20),
-                                  buildTextField(
-                                    hintText: 'Email or username',
-                                    icon: Icons.person,
-                                    onSave: (value) {
-                                      _newLoggedUser.username = value!;
-                                    },
-                                  ),
-                                  const SizedBox(height: 20),
-                                  buildTextField(
-                                    hintText: 'Password',
-                                    icon: Icons.lock,
-                                    obscureText: true,
-                                    onSave: (value) {
-                                      _newLoggedUser.password = value!;
-                                    },
-                                  ),
-                                  const SizedBox(height: 10),
-                                  Row(
-                                    children: <Widget>[
-                                      Checkbox(
-                                        value: _rememberMe,
-                                        onChanged: (value) {
-                                          setState(() {
-                                            _rememberMe = value!;
-                                          });
-                                        },
-                                      ),
-                                      const Text('Remember me'),
-                                    ],
-                                  ),
-                                  const SizedBox(height: 10),
-                                  ElevatedButton(
-                                    onPressed: () async {
-                                      await _login()
-                                          ? Navigator.push(
-                                              _navigationContext!,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      const Dashboard()))
-                                          : null;
-                                    },
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor:
-                                          Theme.of(context).splashColor,
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 40, vertical: 5),
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(10.0),
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Form(
+                        key: _formKey,
+                        child: Container(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 24.0),
+                            decoration: kContainerDecoration.copyWith(
+                                color: Theme.of(context).canvasColor),
+                            child: SingleChildScrollView(
+                              child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: <Widget>[
+                                    const SizedBox(height: 20),
+                                    const Text(
+                                      'Welcome Back!',
+                                      style: TextStyle(
+                                        fontSize: 24,
+                                        fontWeight: FontWeight.bold,
                                       ),
                                     ),
-                                    child: const Text('Sign In'),
-                                  ),
-                                  const SizedBox(height: 10),
-                                  TextButton(
-                                    onPressed: () {},
-                                    child: const Text('Forgot password?'),
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: <Widget>[
-                                      TextButton(
-                                        onPressed: () {},
-                                        child: Text(
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .labelSmall,
-                                            'Terms and Conditions'),
+                                    const SizedBox(height: 10),
+                                    const Text(
+                                      'Login to continue',
+                                      style: TextStyle(fontSize: 16),
+                                    ),
+                                    const SizedBox(height: 20),
+                                    buildTextField(
+                                      hintText: 'Email or username',
+                                      icon: Icons.person,
+                                      onSave: (value) {
+                                        _newLoggedUser.username = value!;
+                                      },
+                                    ),
+                                    const SizedBox(height: 20),
+                                    buildTextField(
+                                      hintText: 'Password',
+                                      icon: Icons.lock,
+                                      obscureText: true,
+                                      onSave: (value) {
+                                        _newLoggedUser.password = value!;
+                                      },
+                                    ),
+                                    const SizedBox(height: 10),
+                                    Row(
+                                      children: <Widget>[
+                                        Checkbox(
+                                          value: _rememberMe,
+                                          onChanged: (value) {
+                                            setState(() {
+                                              _rememberMe = value!;
+                                            });
+                                          },
+                                        ),
+                                        const Text('Remember me'),
+                                      ],
+                                    ),
+                                    const SizedBox(height: 10),
+                                    ElevatedButton(
+                                      onPressed: () async {
+                                        await _login()
+                                            ? Navigator.push(
+                                                _navigationContext!,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        const Dashboard()))
+                                            : null;
+                                      },
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor:
+                                            Theme.of(context).splashColor,
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 40, vertical: 5),
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10.0),
+                                        ),
                                       ),
-                                      const Text('|'),
-                                      TextButton(
-                                        onPressed: () {},
-                                        child: Text(
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .labelSmall,
-                                            'Privacy Policy'),
-                                      ),
-                                    ],
-                                  ),
-                                  const SizedBox(height: 20),
-                                ]),
-                          )),
-                    ),
-                  )
-                ])),
+                                      child: const Text('Sign In'),
+                                    ),
+                                    const SizedBox(height: 10),
+                                    TextButton(
+                                      onPressed: () {},
+                                      child: const Text('Forgot password?'),
+                                    ),
+                                    const SizedBox(height: 10),
+                                    const SizedBox(height: 15),
+                                    Row(children: <Widget>[
+                                      Expanded(
+                                          child: Divider(
+                                            color: Theme.of(context).disabledColor,
+                                            endIndent: 10,
+                                          )),
+                                      const Text("OR"),
+                                      Expanded(
+                                          child: Divider(
+                                            color: Theme.of(context).disabledColor,
+                                            indent: 10,
+                                          )),
+                                    ]),
+                                    const SizedBox(height: 10),
+                                    Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                        children: [
+                                          SizedBox(
+                                              width: 50,
+                                              child: oAuth2Buttons(
+                                                  text: '', icon: Icons.g_mobiledata)),
+                                          const SizedBox(height: 15),
+                                          SizedBox(
+                                              width: 50,
+                                              child: oAuth2Buttons(
+                                                  text: '', icon: Icons.window)),
+                                          const SizedBox(height: 15),
+                                          SizedBox(
+                                              width: 50,
+                                              child: oAuth2Buttons(
+                                                  text: '', icon: Icons.apple)),
+                                        ]),
+                                    const SizedBox(height: 20),
+                                  ]),
+                            )),
+                      ),
+                      // Row(
+                      //   mainAxisAlignment: MainAxisAlignment.center,
+                      //   children: <Widget>[
+                      //     TextButton(
+                      //       onPressed: () {},
+                      //       child: Text(
+                      //           style: Theme.of(context).textTheme.labelSmall,
+                      //           'Terms and Conditions'),
+                      //     ),
+                      //     const Text('|'),
+                      //     TextButton(
+                      //       onPressed: () {},
+                      //       child: Text(
+                      //           style: Theme.of(context).textTheme.labelSmall,
+                      //           'Privacy Policy'),
+                      //     ),
+                      //   ],
+                      // ),
+                    ])),
           ),
+          legalDocumentsButton(context)
         ],
       ),
       floatingActionButton: themeSelectorButton(context),

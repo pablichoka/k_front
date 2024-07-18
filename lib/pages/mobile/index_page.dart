@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:k_front/pages/mobile/signup_form.dart';
+import 'package:k_front/widgets/common/app_bar.dart';
 
 import '../../widgets/desktop/background_index.dart';
 import '../../widgets/mobile/carrousel_index.dart';
@@ -7,32 +8,30 @@ import 'login_form.dart';
 
 Scaffold mobileIndex(BuildContext context) {
   return Scaffold(
+    appBar: const DAppBar(
+      title: title,
+      returnable: false,
+    ),
     body: Stack(children: <Widget>[
       const BackgroundScreen(),
       Column(children: <Widget>[
+        Center(
+          child: SizedBox(
+              height: MediaQuery.of(context).size.height * 0.7,
+              width: MediaQuery.of(context).size.width,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.6,
+                      width: MediaQuery.of(context).size.width,
+                      child: IndexMobileCarrousel(context))
+                ],
+              )),
+        ),
         SizedBox(
-            height: MediaQuery.of(context).size.height * 0.80,
-            width: MediaQuery.of(context).size.width,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Center(
-                    child: SizedBox(
-                        child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 40, horizontal: 15),
-                  child: Text('Welcome to kCal Control',
-                      style: Theme.of(context).textTheme.headlineLarge),
-                ))),
-                SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.6,
-                    width: MediaQuery.of(context).size.width,
-                    child: IndexMobileCarrousel(context))
-              ],
-            )),
-        SizedBox(
-            height: MediaQuery.of(context).size.height * 0.20,
+            height: MediaQuery.of(context).size.height * 0.15,
             width: MediaQuery.of(context).size.width,
             child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -50,7 +49,6 @@ Scaffold mobileIndex(BuildContext context) {
                                 PageRouteBuilder(
                                   pageBuilder:
                                       (context, animation1, animation2) =>
-                                          //TODO: create signup page for mobiles
                                           const MobileSignUpPage(),
                                   transitionDuration:
                                       const Duration(milliseconds: 300),

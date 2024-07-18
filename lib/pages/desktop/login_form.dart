@@ -171,24 +171,6 @@ class DesktopLoginFormState extends State<DesktopLoginForm> {
                         ),
                       ],
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        TextButton(
-                          onPressed: () {},
-                          child: Text(
-                              style: Theme.of(context).textTheme.labelSmall,
-                              'Terms and Conditions'),
-                        ),
-                        const Text('|'),
-                        TextButton(
-                          onPressed: () {},
-                          child: Text(
-                              style: Theme.of(context).textTheme.labelSmall,
-                              'Privacy Policy'),
-                        ),
-                      ],
-                    ),
                   ]),
             )),
       ),

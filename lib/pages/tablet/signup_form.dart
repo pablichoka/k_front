@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:k_front/models/user.dart';
 import 'package:k_front/controller/api_user_controller.dart';
+import 'package:k_front/widgets/common/legal_documents_button.dart';
 
 import '../../controller/impl/api_user_controller_impl.dart';
 import '../../themes/theme_data.dart';
@@ -84,7 +85,9 @@ class TabletSignUpPageState extends State<TabletSignUpPage> {
           suffixIcon: obscureText
               ? IconButton(
                   icon: Icon(
-                    obscureText && _obscureText ? Icons.visibility : Icons.visibility_off,
+                    obscureText && _obscureText
+                        ? Icons.visibility
+                        : Icons.visibility_off,
                   ),
                   onPressed: () {
                     setState(() {
@@ -152,17 +155,9 @@ class TabletSignUpPageState extends State<TabletSignUpPage> {
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: <Widget>[
-                                const Text(
-                                  'Welcome!',
-                                  style: TextStyle(
-                                    fontSize: 24,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                const SizedBox(height: 10),
-                                const Text(
-                                  'Provide the required data to get your access',
-                                  style: TextStyle(fontSize: 16),
+                                Text(
+                                  'Fill in the form to sign up',
+                                  style: Theme.of(context).textTheme.labelLarge,
                                 ),
                                 const SizedBox(height: 30),
                                 formBody(), //form fields
@@ -189,15 +184,30 @@ class TabletSignUpPageState extends State<TabletSignUpPage> {
                             ),
                           ),
                         ),
-                        SizedBox(
-                          height: 500,
-                          child: VerticalDivider(
-                            color: Theme.of(context).shadowColor,
-                            thickness: 1,
-                            width: 50,
-                            indent: 0.0,
-                            endIndent: 0.0,
-                          ),
+                        Column(
+                          children: [
+                            SizedBox(
+                              height: 200,
+                              child: VerticalDivider(
+                                color: Theme.of(context).disabledColor,
+                                thickness: 1,
+                                width: 50,
+                                indent: 20.0,
+                                endIndent: 20.0,
+                              ),
+                            ),
+                            const Text('OR'),
+                            SizedBox(
+                              height: 200,
+                              child: VerticalDivider(
+                                color: Theme.of(context).disabledColor,
+                                thickness: 1,
+                                width: 50,
+                                indent: 20.0,
+                                endIndent: 20.0,
+                              ),
+                            ),
+                          ],
                         ),
                         Column(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -224,30 +234,12 @@ class TabletSignUpPageState extends State<TabletSignUpPage> {
                       ],
                     ),
                   ),
-                  const SizedBox(height: 15),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      TextButton(
-                        onPressed: () {},
-                        child: Text(
-                            style: Theme.of(context).textTheme.labelSmall,
-                            'Terms and Conditions'),
-                      ),
-                      const Text('|'),
-                      TextButton(
-                        onPressed: () {},
-                        child: Text(
-                            style: Theme.of(context).textTheme.labelSmall,
-                            'Privacy Policy'),
-                      ),
-                    ],
-                  ),
                 ],
               ),
             ),
           ),
         ),
+        legalDocumentsButton(context)
       ]),
       floatingActionButton: themeSelectorButton(context),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
@@ -341,7 +333,8 @@ class TabletSignUpPageState extends State<TabletSignUpPage> {
                       return 'Please enter your password';
                     }
                     String invalidSymbol = r'[^\w.@]';
-                    String pattern = r'^(?=.*[A-Z])(?=.*[0-9])[A-Za-z0-9.@_]{8,}$';
+                    String pattern =
+                        r'^(?=.*[A-Z])(?=.*[0-9])[A-Za-z0-9.@_]{8,}$';
                     RegExp regex = RegExp(pattern);
                     RegExp regex2 = RegExp(invalidSymbol);
                     if (regex2.hasMatch(value)) {

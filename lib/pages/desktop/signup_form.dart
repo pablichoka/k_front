@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:k_front/controller/api_user_controller.dart';
 import 'package:k_front/models/user.dart';
+import 'package:k_front/widgets/common/legal_documents_button.dart';
 
 import '../../controller/impl/api_user_controller_impl.dart';
 import '../../themes/theme_data.dart';
@@ -206,30 +207,12 @@ class DesktopSignUpPageState extends State<DesktopSignUpPage> {
                       ],
                     ),
                   ),
-                  const SizedBox(height: 15),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      TextButton(
-                        onPressed: () {},
-                        child: Text(
-                            style: Theme.of(context).textTheme.labelSmall,
-                            'Terms and Conditions'),
-                      ),
-                      const Text('|'),
-                      TextButton(
-                        onPressed: () {},
-                        child: Text(
-                            style: Theme.of(context).textTheme.labelSmall,
-                            'Privacy Policy'),
-                      ),
-                    ],
-                  ),
                 ],
               ),
             ),
           ),
         ),
+        legalDocumentsButton(context)
       ]),
       floatingActionButton: themeSelectorButton(context),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
@@ -266,11 +249,6 @@ class DesktopSignUpPageState extends State<DesktopSignUpPage> {
             fontSize: 24,
             fontWeight: FontWeight.bold,
           ),
-        ),
-        SizedBox(height: MediaQuery.of(context).size.height * 0.01),
-        const Text(
-          'Provide the required data to get your access',
-          style: TextStyle(fontSize: 16),
         ),
         SizedBox(height: MediaQuery.of(context).size.height * 0.02),
         buildTextField(
