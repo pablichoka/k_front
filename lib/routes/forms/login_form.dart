@@ -24,12 +24,12 @@ class _LoginFormState extends State<LoginForm> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      padding: const EdgeInsets.all(32.0),
+      padding: const EdgeInsets.all(24.0),
       child: Form(
         key: _formKey,
         child: Column(
           children: [
-            const SizedBox(height: 20),
+            const SizedBox(height: 10),
             const Text(
               'Welcome Back!',
               style: TextStyle(
