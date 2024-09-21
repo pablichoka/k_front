@@ -47,7 +47,7 @@ class KCalFront extends StatelessWidget {
         themeMode: themeNotifier.themeMode,
         debugShowCheckedModeBanner: false,
         routes: {
-          '/': (context) => const WebIndex(),
+          '/': (context) => const Index(),
           // 'desktop/login': (context) => const DesktopLoginForm(),
           // 'mobile/login': (context) => const MobileLoginForm(),
           'login': (context) => const LoginPage(),
