@@ -13,7 +13,7 @@ ElevatedButton oAuth2Buttons({required String text, required IconData icon}) {
     onPressed: () => {},
     child: text != ''
         ? Row(
-            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Icon(icon),
               const SizedBox(width: 10),

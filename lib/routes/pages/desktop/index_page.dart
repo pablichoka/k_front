@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:k_front/pages/tablet/login_form.dart';
+import 'package:k_front/routes/pages/common/login_page.dart';
+import 'package:k_front/routes/pages/common/signup_page.dart';
 
-import '../../themes/theme_data.dart';
-import '../../utils/device_checker.dart';
-import '../../widgets/common/app_bar.dart';
-import '../../widgets/desktop/background_index.dart';
-import '../../widgets/desktop/carrousel_index.dart';
-import 'signup_form.dart';
+import '../../../themes/theme_data.dart';
+import '../../../widgets/common/app_bar.dart';
+import '../../../widgets/common/background_index.dart';
+import '../../../widgets/desktop/carrousel_index.dart';
 
 const title = 'kCal Control';
 
-Scaffold tabletIndex(BuildContext context) {
+Scaffold desktopIndex(BuildContext context) {
   return Scaffold(
     appBar: DAppBar(
       title: title,
@@ -23,7 +22,7 @@ Scaffold tabletIndex(BuildContext context) {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const TabletSignUpPage()));
+                          builder: (context) => const SignUpPage()));
                 },
                 child: Text('Sign up',
                     style: TextStyle(
@@ -31,19 +30,6 @@ Scaffold tabletIndex(BuildContext context) {
                             .textTheme
                             .headlineLarge
                             ?.color)))),
-        Container(
-            margin: const EdgeInsets.only(right: 20),
-            child: TextButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, 'tablet/login');
-                },
-                style: ButtonStyle(
-                    backgroundColor: WidgetStateProperty.all<Color>(
-                        Theme.of(context).highlightColor)),
-                child: Text('Log in',
-                    style: TextStyle(
-                        color:
-                            Theme.of(context).textTheme.headlineLarge?.color))))
       ],
     ),
     body: Stack(
@@ -57,7 +43,7 @@ Scaffold tabletIndex(BuildContext context) {
                 children: <Widget>[
                   Center(
                     child: SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.96,
+                        width: MediaQuery.of(context).size.width * 0.65,
                         height: MediaQuery.of(context).size.height * 0.20,
                         child: Center(
                           child: Text('Welcome to kCal Control',
@@ -66,13 +52,21 @@ Scaffold tabletIndex(BuildContext context) {
                   ),
                   Center(
                     child: SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.96,
+                        width: MediaQuery.of(context).size.width * 0.6,
                         height: MediaQuery.of(context).size.height * 0.50,
                         child: IndexDesktopCarousel(context)),
                   )
                 ],
               ),
             ),
+            SizedBox(
+              width: MediaQuery.of(context).size.width * 0.28,
+              height: MediaQuery.of(context).size.height *0.70,
+              child: ClipRRect(              
+                borderRadius: BorderRadius.circular(10),
+                child: const LoginPage(),
+              ),
+            )
           ],
         ),
       ],

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:k_front/pages/mobile/signup_form.dart';
+import 'package:k_front/routes/pages/common/login_page.dart';
+import 'package:k_front/routes/pages/common/signup_page.dart';
 
-import '../../widgets/desktop/background_index.dart';
-import '../../widgets/mobile/carrousel_index.dart';
-import 'login_form.dart';
+import '../../../widgets/common/background_index.dart';
+import '../../../widgets/mobile/carrousel_index.dart';
 
 Scaffold mobileIndex(BuildContext context) {
   return Scaffold(
@@ -50,8 +50,7 @@ Scaffold mobileIndex(BuildContext context) {
                                 PageRouteBuilder(
                                   pageBuilder:
                                       (context, animation1, animation2) =>
-                                          //TODO: create signup page for mobiles
-                                          const MobileSignUpPage(),
+                                          const SignUpPage(),
                                   transitionDuration:
                                       const Duration(milliseconds: 300),
                                   transitionsBuilder:
