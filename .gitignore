@@ -89,3 +89,6 @@ linux/ServiceDefinitions.json
 *.flutter-plugins-dependencies
 *.packages
 *.pub-cache/
+
+# FVM Version Cache
+.fvm/
