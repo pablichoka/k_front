@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:k_front/routes/pages/common/login_page.dart';
 import 'package:k_front/routes/pages/common/signup_page.dart';
-import 'package:k_front/widgets/common/legal_documents_button.dart';
 
 import '../../../themes/theme_data.dart';
 import '../../../widgets/common/app_bar.dart';
