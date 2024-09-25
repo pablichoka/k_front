@@ -5,7 +5,6 @@ import 'package:k_front/controller/impl/api_auth_controller_impl.dart';
 import 'package:k_front/model/logged_user.dart';
 import 'package:k_front/routes/dashboard.dart';
 import 'package:k_front/widgets/common/custom_text_field.dart';
-import 'package:k_front/widgets/common/o_auth_buttons.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({Key? key}) : super(key: key);
@@ -28,6 +27,8 @@ class _LoginFormState extends State<LoginForm> {
       child: Form(
         key: _formKey,
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const SizedBox(height: 10),
             const Text(
@@ -111,12 +112,6 @@ class _LoginFormState extends State<LoginForm> {
               onPressed: () {},
               child: const Text('Forgot password?'),
             ),
-            const SizedBox(height: 70,),
-            oAuth2Buttons(
-                text: 'Sign in with Google', icon: Icons.g_translate),
-            const SizedBox(height: 15),
-            oAuth2Buttons(
-                text: 'Sign in with Facebook', icon: Icons.facebook),
           ],
         ),
       ),

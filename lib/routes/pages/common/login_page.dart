@@ -26,32 +26,56 @@ class LoginPageState extends State<LoginPage> {
       builder: (context, constraints) {
         if (isDesktop(context)) {
           return buildDesktopLayout();
-        } else if (isTablet(context)) {
+        }
+        else if (isTablet(context)) {
           return buildTabletLayout();
-        } else {
+        }
+        else {
           return buildMobileLayout();
         }
-      },
+      }
     );
   }
 
   Widget buildDesktopLayout() {
     return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          const Center(child: LoginForm()),
-          legalDocumentsButton(context),
-        ],
+      appBar: DAppBar(
+        title: title,
+        returnable: true
       ),
+      body: Stack(
+        children: [
+          const BackgroundScreen(),
+          Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  width: 400,
+                  height: 450,
+                  padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                  decoration: kContainerDecoration.copyWith(
+                    color: Theme.of(context).cardColor
+                  ),
+                  child: const LoginForm()
+                ),
+                const SizedBox(height: 15),
+                LegalDocumentsButton()
+              ]
+            )
+          )
+        ]
+      )
     );
+
   }
 
   Widget buildTabletLayout() {
     return Scaffold(
       appBar: DAppBar(
         title: title,
-        returnable: true,
+        returnable: true
       ),
       body: Stack(
         children: [
@@ -63,22 +87,22 @@ class LoginPageState extends State<LoginPage> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Container(
-                    width: 450,
-                    height: 650,
+                    width: 400,
+                    height: 450,
                     padding: const EdgeInsets.symmetric(horizontal: 12.0),
                     decoration: kContainerDecoration.copyWith(
-                      color: Theme.of(context).cardColor,
+                      color: Theme.of(context).cardColor
                     ),
-                    child: const LoginForm(),
+                    child: const LoginForm()
                   ),
                   const SizedBox(height: 15),
-                  legalDocumentsButton(context),
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
+                  LegalDocumentsButton()
+                ]
+              )
+            )
+          )
+        ]
+      )
     );
   }
 
@@ -86,7 +110,7 @@ class LoginPageState extends State<LoginPage> {
     return Scaffold(
       appBar: DAppBar(
         title: title,
-        returnable: true,
+        returnable: true
       ),
       body: Stack(
         children: [
@@ -102,18 +126,18 @@ class LoginPageState extends State<LoginPage> {
                     height: 650,
                     padding: const EdgeInsets.symmetric(horizontal: 12.0),
                     decoration: kContainerDecoration.copyWith(
-                      color: Theme.of(context).cardColor,
+                      color: Theme.of(context).cardColor
                     ),
-                    child: const LoginForm(),
+                    child: const LoginForm()
                   ),
                   const SizedBox(height: 15),
-                  legalDocumentsButton(context),
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
+                  LegalDocumentsButton()
+                ]
+              )
+            )
+          )
+        ]
+      )
     );
   }
 }

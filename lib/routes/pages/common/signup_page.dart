@@ -30,7 +30,7 @@ class SignUpPageState extends State<SignUpPage> {
     email: '',
     password: '',
     mobile: '',
-    role: 'USER',
+    role: 'USER'
   );
 
   ApiUserController apiUser = ApiUserControllerImpl();
@@ -40,11 +40,12 @@ class SignUpPageState extends State<SignUpPage> {
       _formKey.currentState!.save();
       try {
         return await apiUser.signup(newUser);
-      } catch (e) {
+      }
+      catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Something failed during registration: $e'),
-          ),
+            content: Text('Something failed during registration: $e')
+          )
         );
         return false;
       }
@@ -57,16 +58,18 @@ class SignUpPageState extends State<SignUpPage> {
 
   @override
   Widget build(BuildContext context) {
-     return LayoutBuilder(
+    return LayoutBuilder(
       builder: (context, constraints) {
         if (isDesktop(context)) {
           return buildDesktopLayout();
-        } else if (isTablet(context)) {
+        }
+        else if (isTablet(context)) {
           return buildTabletLayout();
-        } else {
+        }
+        else {
           return buildMobileLayout();
         }
-      },
+      }
     );
   }
 
@@ -75,71 +78,76 @@ class SignUpPageState extends State<SignUpPage> {
       appBar: DAppBar(
         title: title,
         actions: const [],
-        returnable: true,
+        returnable: true
       ),
       body: Stack(
         children: <Widget>[
           const BackgroundScreen(),
           Center(
             child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 24.0),
+              padding: const EdgeInsets.all(24.0),
               width: 1050,
               child: SingleChildScrollView(
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    const SizedBox(height: 25),
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 24.0),
-                      decoration: kContainerDecoration.copyWith(
-                        color: Theme.of(context).cardColor,
-                      ),
+                  children: [
+                    IntrinsicHeight(
                       child: Row(
-                        children: [
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
                           Expanded(
-                            child: Form(
-                              key: _formKey,
-                              child: SignUpForm(
-                                newUser: newUser,
-                                formKey: _formKey,
-                                obscureText: _obscureText,
-                                signup: _signup,
-                                navigationContext: _navigationContext,
-                                phoneController: _phoneController,
-                                number: _number,
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                              decoration: kContainerDecoration.copyWith(
+                                color: Theme.of(context).cardColor
                               ),
-                            ),
+                              child: Form(
+                                key: _formKey,
+                                child: SignUpForm(
+                                  newUser: newUser,
+                                  formKey: _formKey,
+                                  obscureText: _obscureText,
+                                  signup: _signup,
+                                  navigationContext: _navigationContext,
+                                  phoneController: _phoneController,
+                                  number: _number
+                                )
+                              )
+                            )
                           ),
-                          const SizedBox(
-                            height: 600,
-                            child: VerticalDivider(
-                              endIndent: 0.0,
+                          const SizedBox(width: 15),
+                          Container(
+                            padding: const EdgeInsets.all(24.0),
+                            decoration: kContainerDecoration.copyWith(
+                              color: Theme.of(context).cardColor
                             ),
-                          ),
-                          Column(
-                            children: [
-                              oAuth2Buttons(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                oAuth2Buttons(
                                   text: 'Sign up with Google',
-                                  icon: Icons.g_translate),
-                              const SizedBox(height: 15),
-                              oAuth2Buttons(
+                                  icon: Icons.g_translate
+                                ),
+                                const SizedBox(height: 15),
+                                oAuth2Buttons(
                                   text: 'Sign up with Facebook',
-                                  icon: Icons.facebook),
-                            ],
+                                  icon: Icons.facebook
+                                )
+                              ]
+                            )
                           ),
-                        ],
-                      ),
+                          const SizedBox(width: 15)
+                        ]
+                      )
                     ),
-                    const SizedBox(height: 15),
-                    legalDocumentsButton(context),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
+                    LegalDocumentsButton()
+                  ]
+                )
+              )
+            )
+          )
+        ]
+      )
     );
   }
 
@@ -148,71 +156,75 @@ class SignUpPageState extends State<SignUpPage> {
       appBar: DAppBar(
         title: title,
         actions: const [],
-        returnable: true,
+        returnable: true
       ),
       body: Stack(
         children: <Widget>[
           const BackgroundScreen(),
           Center(
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 24.0),
-              width: 800,
-              child: SingleChildScrollView(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    const SizedBox(height: 25),
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 24.0),
-                      decoration: kContainerDecoration.copyWith(
-                        color: Theme.of(context).cardColor,
-                      ),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: Form(
-                              key: _formKey,
-                              child: SignUpForm(
-                                newUser: newUser,
-                                formKey: _formKey,
-                                obscureText: _obscureText,
-                                signup: _signup,
-                                navigationContext: _navigationContext,
-                                phoneController: _phoneController,
-                                number: _number,
-                              ),
-                            ),
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  const SizedBox(height: 25),
+                  IntrinsicHeight(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        Container(
+                          width: 700,
+                          padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                          decoration: kContainerDecoration.copyWith(
+                            color: Theme.of(context).cardColor
                           ),
-                          const SizedBox(
-                            height: 500,
-                            child: VerticalDivider(
-                              endIndent: 0.0,
-                            ),
+                          child: Form(
+                            key: _formKey,
+                            child: SignUpForm(
+                              newUser: newUser,
+                              formKey: _formKey,
+                              obscureText: _obscureText,
+                              signup: _signup,
+                              navigationContext: _navigationContext,
+                              phoneController: _phoneController,
+                              number: _number
+                            )
+                          )
+                        ),
+                        const SizedBox(width: 15),
+                        Container(
+                          padding: const EdgeInsets.all(24.0),
+                          decoration: kContainerDecoration.copyWith(
+                            color: Theme.of(context).cardColor
                           ),
-                          Column(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               oAuth2Buttons(
-                                  text: 'Sign up with Google',
-                                  icon: Icons.g_translate),
+                                text: 'Sign up with Google',
+                                icon: Icons.g_translate
+                              ),
                               const SizedBox(height: 15),
                               oAuth2Buttons(
-                                  text: 'Sign up with Facebook',
-                                  icon: Icons.facebook),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(height: 15),
-                    legalDocumentsButton(context),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
+                                text: 'Sign up with Facebook',
+                                icon: Icons.facebook
+                              )
+                            ]
+                          )
+                        ),
+                        const SizedBox(width: 15)
+                      ]
+                    )
+                  ),
+                  const SizedBox(height: 15),
+                  LegalDocumentsButton()
+                ]
+              )
+            )
+          )
+        ]
+      )
     );
   }
 
@@ -221,7 +233,7 @@ class SignUpPageState extends State<SignUpPage> {
       appBar: DAppBar(
         title: title,
         actions: const [],
-        returnable: true,
+        returnable: true
       ),
       body: Stack(
         children: <Widget>[
@@ -239,7 +251,7 @@ class SignUpPageState extends State<SignUpPage> {
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 12.0),
                       decoration: kContainerDecoration.copyWith(
-                        color: Theme.of(context).cardColor,
+                        color: Theme.of(context).cardColor
                       ),
                       child: Padding(
                         padding: const EdgeInsets.symmetric(vertical: 16.0),
@@ -254,36 +266,36 @@ class SignUpPageState extends State<SignUpPage> {
                                 signup: _signup,
                                 navigationContext: _navigationContext,
                                 phoneController: _phoneController,
-                                number: _number,
-                              ),
+                                number: _number
+                              )
                             ),
                             const SizedBox(height: 15),
                             Center(
                               child: Column(
                                 children: [
                                   oAuth2Buttons(
-                                      text: 'Sign up with Google',
-                                      icon: Icons.g_translate),
+                                    text: 'Sign up with Google',
+                                    icon: Icons.g_translate),
                                   const SizedBox(height: 10),
                                   oAuth2Buttons(
-                                      text: 'Sign up with Facebook',
-                                      icon: Icons.facebook),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
+                                    text: 'Sign up with Facebook',
+                                    icon: Icons.facebook)
+                                ]
+                              )
+                            )
+                          ]
+                        )
+                      )
                     ),
                     const SizedBox(height: 15),
-                    legalDocumentsButton(context),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
+                    LegalDocumentsButton()
+                  ]
+                )
+              )
+            )
+          )
+        ]
+      )
     );
   }
 }

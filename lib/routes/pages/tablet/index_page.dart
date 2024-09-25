@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:k_front/routes/pages/common/login_page.dart';
 
 import '../../../themes/theme_data.dart';
 import '../../../widgets/common/app_bar.dart';
@@ -15,6 +16,55 @@ Scaffold tabletIndex(BuildContext context) {
       returnable: false,
       actions: [
         Container(
+          margin: const EdgeInsets.only(right: 20),
+          child: TextButton.icon(
+            icon: Icon(Icons.login, color: Theme.of(context).textTheme.headlineLarge?.color),
+            label: Text('Log in with Google',
+              style: TextStyle(
+                color: Theme.of(context)
+                  .textTheme
+                  .headlineLarge
+                  ?.color)),
+            onPressed: () {
+                  Navigator.pushNamed(context, 'login');
+                },
+            style: TextButton.styleFrom(
+              backgroundColor: Colors.primaries[DateTime.now().millisecond % Colors.primaries.length]
+            )
+          )
+        ),
+        Container(
+          margin: const EdgeInsets.only(right: 20),
+          child: TextButton.icon(
+            icon: Icon(Icons.facebook, color: Theme.of(context).textTheme.headlineLarge?.color),
+            label: Text('Log in with Facebook',
+              style: TextStyle(
+                color: Theme.of(context)
+                  .textTheme
+                  .headlineLarge
+                  ?.color)),
+            onPressed: () {
+                  Navigator.pushNamed(context, 'login');
+                },
+            style: TextButton.styleFrom(
+              backgroundColor: Colors.primaries[DateTime.now().millisecond % Colors.primaries.length]
+            )
+          )
+        ),
+        Container(
+            margin: const EdgeInsets.only(right: 20),
+            child: TextButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, 'login');
+                },
+                style: ButtonStyle(
+                    backgroundColor: WidgetStateProperty.all<Color>(
+                        Theme.of(context).highlightColor)),
+                child: Text('Log in',
+                    style: TextStyle(
+                        color:
+                            Theme.of(context).textTheme.headlineLarge?.color)))),
+        Container(
             margin: const EdgeInsets.only(right: 20),
             child: TextButton(
                 onPressed: () {
@@ -29,19 +79,6 @@ Scaffold tabletIndex(BuildContext context) {
                             .textTheme
                             .headlineLarge
                             ?.color)))),
-        Container(
-            margin: const EdgeInsets.only(right: 20),
-            child: TextButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, 'login');
-                },
-                style: ButtonStyle(
-                    backgroundColor: WidgetStateProperty.all<Color>(
-                        Theme.of(context).highlightColor)),
-                child: Text('Log in',
-                    style: TextStyle(
-                        color:
-                            Theme.of(context).textTheme.headlineLarge?.color))))
       ],
     ),
     body: Stack(
