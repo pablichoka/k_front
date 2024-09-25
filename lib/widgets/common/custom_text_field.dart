@@ -23,7 +23,7 @@ class CustomTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
+    return TextFormField(      
       validator: validator ?? (value) {
         if (value == null || value.isEmpty) {
           return 'Please enter required information.';
