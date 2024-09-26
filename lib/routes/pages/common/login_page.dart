@@ -140,22 +140,32 @@ class LoginPageState extends State<LoginPage> {
                       ),
                       child: Column(
                         children: [
-                          oAuth2Buttons(
-                            text: 'Login with Google',
-                            icon: Icons.g_translate
+                          OAuth2Button(provider: OAuthProvider.google, style: ButtonStyle(
+                              shape: WidgetStateProperty.all<OutlinedBorder>(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10.0))),
+                              padding: WidgetStateProperty.all<EdgeInsets>(
+                                const EdgeInsets.symmetric(horizontal: 40, vertical: 10)),
+                              minimumSize: WidgetStateProperty.all<Size>(
+                                Size(MediaQuery.of(context).size.width * 0.9, 50)))
                           ),
                           const SizedBox(height: 15),
-                          oAuth2Buttons(
-                            text: 'Login with Facebook',
-                            icon: Icons.facebook
+                          OAuth2Button(provider: OAuthProvider.microsoft, style: ButtonStyle(
+                              shape: WidgetStateProperty.all<OutlinedBorder>(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10.0))),
+                              padding: WidgetStateProperty.all<EdgeInsets>(
+                                const EdgeInsets.symmetric(horizontal: 40, vertical: 10)),
+                              minimumSize: WidgetStateProperty.all<Size>(
+                                Size(MediaQuery.of(context).size.width * 0.9, 50)))
                           )
                         ]
-                      ),
+                      )
                     ),
                     const SizedBox(height: 15),
                     LegalDocumentsButton()
                   ]
-                ),
+                )
               )
             )
           )

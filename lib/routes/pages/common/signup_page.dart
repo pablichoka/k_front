@@ -125,14 +125,23 @@ class SignUpPageState extends State<SignUpPage> {
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                oAuth2Buttons(
-                                  text: 'Sign up with Google',
-                                  icon: Icons.g_translate
+                                OAuth2Button(provider: OAuthProvider.google, style: ButtonStyle(
+                                    padding: WidgetStateProperty.all<EdgeInsets>(
+                                      const EdgeInsets.symmetric(horizontal: 10, vertical: 20)),
+                                    shape: WidgetStateProperty.all<OutlinedBorder>(
+                                      RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(10.0))),
+                                    fixedSize: WidgetStateProperty.all<Size>(const Size(220, 50))
+                                  )
                                 ),
                                 const SizedBox(height: 15),
-                                oAuth2Buttons(
-                                  text: 'Sign up with Facebook',
-                                  icon: Icons.facebook
+                                OAuth2Button(provider: OAuthProvider.microsoft, style: ButtonStyle(
+                                    padding: WidgetStateProperty.all<EdgeInsets>(
+                                      const EdgeInsets.symmetric(horizontal: 10, vertical: 20)),
+                                    shape: WidgetStateProperty.all<OutlinedBorder>(
+                                      RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(10.0))),
+                                    fixedSize: WidgetStateProperty.all<Size>(const Size(220, 50)))
                                 )
                               ]
                             )
@@ -165,17 +174,13 @@ class SignUpPageState extends State<SignUpPage> {
           Center(
             child: SingleChildScrollView(
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  const SizedBox(height: 25),
                   IntrinsicHeight(
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
                         Container(
-                          width: 700,
+                          width: 625,
                           padding: const EdgeInsets.symmetric(horizontal: 24.0),
                           decoration: kContainerDecoration.copyWith(
                             color: Theme.of(context).cardColor
@@ -195,26 +200,35 @@ class SignUpPageState extends State<SignUpPage> {
                         ),
                         const SizedBox(width: 15),
                         Container(
-                          padding: const EdgeInsets.all(24.0),
+                          padding: const EdgeInsets.all(12.0),
                           decoration: kContainerDecoration.copyWith(
                             color: Theme.of(context).cardColor
                           ),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              oAuth2Buttons(
-                                text: 'Sign up with Google',
-                                icon: Icons.g_translate
+                              OAuth2Button(provider: OAuthProvider.google, style: ButtonStyle(
+                                  shape: WidgetStateProperty.all<OutlinedBorder>(
+                                    RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10.0))),
+                                  padding: WidgetStateProperty.all<EdgeInsets>(
+                                    const EdgeInsets.symmetric(horizontal: 10, vertical: 20)),
+                                  fixedSize: WidgetStateProperty.all<Size>(
+                                    const Size(200, 50)))
                               ),
                               const SizedBox(height: 15),
-                              oAuth2Buttons(
-                                text: 'Sign up with Facebook',
-                                icon: Icons.facebook
+                              OAuth2Button(provider: OAuthProvider.microsoft, style: ButtonStyle(
+                                  shape: WidgetStateProperty.all<OutlinedBorder>(
+                                    RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10.0))),
+                                  padding: WidgetStateProperty.all<EdgeInsets>(
+                                    const EdgeInsets.symmetric(horizontal: 10, vertical: 20)),
+                                  fixedSize: WidgetStateProperty.all<Size>(
+                                    const Size(200, 50)))
                               )
                             ]
                           )
-                        ),
-                        const SizedBox(width: 15)
+                        )
                       ]
                     )
                   ),
@@ -282,17 +296,27 @@ class SignUpPageState extends State<SignUpPage> {
                         ),
                         child: Column(
                           children: [
-                            oAuth2Buttons(
-                              text: 'Sign up with Google',
-                              icon: Icons.g_translate
+                            OAuth2Button(provider: OAuthProvider.google, style: ButtonStyle(
+                                shape: WidgetStateProperty.all<OutlinedBorder>(
+                                  RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10.0))),
+                                padding: WidgetStateProperty.all<EdgeInsets>(
+                                  const EdgeInsets.symmetric(horizontal: 40, vertical: 10)),
+                                minimumSize: WidgetStateProperty.all<Size>(
+                                  Size(MediaQuery.of(context).size.width * 0.9, 50)))
                             ),
                             const SizedBox(height: 15),
-                            oAuth2Buttons(
-                              text: 'Sign up with Facebook',
-                              icon: Icons.facebook
+                            OAuth2Button(provider: OAuthProvider.microsoft, style: ButtonStyle(
+                                shape: WidgetStateProperty.all<OutlinedBorder>(
+                                  RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10.0))),
+                                padding: WidgetStateProperty.all<EdgeInsets>(
+                                  const EdgeInsets.symmetric(horizontal: 40, vertical: 10)),
+                                minimumSize: WidgetStateProperty.all<Size>(
+                                  Size(MediaQuery.of(context).size.width * 0.9, 50)))
                             )
                           ]
-                        ),
+                        )
                       )
                     )
                   ]
