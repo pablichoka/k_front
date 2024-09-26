@@ -140,24 +140,22 @@ class LoginPageState extends State<LoginPage> {
                       ),
                       child: Column(
                         children: [
-                          OAuth2Button(provider: OAuthProvider.google, style: ButtonStyle(
+                          OAuth2Button(provider: OAuthProvider.loginGoogle, style: ButtonStyle(
                               shape: WidgetStateProperty.all<OutlinedBorder>(
                                 RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(10.0))),
                               padding: WidgetStateProperty.all<EdgeInsets>(
                                 const EdgeInsets.symmetric(horizontal: 40, vertical: 10)),
-                              minimumSize: WidgetStateProperty.all<Size>(
-                                Size(MediaQuery.of(context).size.width * 0.9, 50)))
+                              )
                           ),
                           const SizedBox(height: 15),
-                          OAuth2Button(provider: OAuthProvider.microsoft, style: ButtonStyle(
+                          OAuth2Button(provider: OAuthProvider.loginMicrosoft, style: ButtonStyle(
                               shape: WidgetStateProperty.all<OutlinedBorder>(
                                 RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(10.0))),
                               padding: WidgetStateProperty.all<EdgeInsets>(
                                 const EdgeInsets.symmetric(horizontal: 40, vertical: 10)),
-                              minimumSize: WidgetStateProperty.all<Size>(
-                                Size(MediaQuery.of(context).size.width * 0.9, 50)))
+                              )
                           )
                         ]
                       )

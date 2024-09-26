@@ -125,7 +125,7 @@ class SignUpPageState extends State<SignUpPage> {
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                OAuth2Button(provider: OAuthProvider.google, style: ButtonStyle(
+                                OAuth2Button(provider: OAuthProvider.signupGoogle, style: ButtonStyle(
                                     padding: WidgetStateProperty.all<EdgeInsets>(
                                       const EdgeInsets.symmetric(horizontal: 10, vertical: 20)),
                                     shape: WidgetStateProperty.all<OutlinedBorder>(
@@ -135,7 +135,7 @@ class SignUpPageState extends State<SignUpPage> {
                                   )
                                 ),
                                 const SizedBox(height: 15),
-                                OAuth2Button(provider: OAuthProvider.microsoft, style: ButtonStyle(
+                                OAuth2Button(provider: OAuthProvider.signupMicrosoft, style: ButtonStyle(
                                     padding: WidgetStateProperty.all<EdgeInsets>(
                                       const EdgeInsets.symmetric(horizontal: 10, vertical: 20)),
                                     shape: WidgetStateProperty.all<OutlinedBorder>(
@@ -207,7 +207,7 @@ class SignUpPageState extends State<SignUpPage> {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              OAuth2Button(provider: OAuthProvider.google, style: ButtonStyle(
+                              OAuth2Button(provider: OAuthProvider.signupGoogle, style: ButtonStyle(
                                   shape: WidgetStateProperty.all<OutlinedBorder>(
                                     RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(10.0))),
@@ -217,7 +217,7 @@ class SignUpPageState extends State<SignUpPage> {
                                     const Size(200, 50)))
                               ),
                               const SizedBox(height: 15),
-                              OAuth2Button(provider: OAuthProvider.microsoft, style: ButtonStyle(
+                              OAuth2Button(provider: OAuthProvider.signupMicrosoft, style: ButtonStyle(
                                   shape: WidgetStateProperty.all<OutlinedBorder>(
                                     RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(10.0))),
@@ -296,7 +296,7 @@ class SignUpPageState extends State<SignUpPage> {
                         ),
                         child: Column(
                           children: [
-                            OAuth2Button(provider: OAuthProvider.google, style: ButtonStyle(
+                            OAuth2Button(provider: OAuthProvider.signupGoogle, style: ButtonStyle(
                                 shape: WidgetStateProperty.all<OutlinedBorder>(
                                   RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(10.0))),
@@ -306,7 +306,7 @@ class SignUpPageState extends State<SignUpPage> {
                                   Size(MediaQuery.of(context).size.width * 0.9, 50)))
                             ),
                             const SizedBox(height: 15),
-                            OAuth2Button(provider: OAuthProvider.microsoft, style: ButtonStyle(
+                            OAuth2Button(provider: OAuthProvider.signupMicrosoft, style: ButtonStyle(
                                 shape: WidgetStateProperty.all<OutlinedBorder>(
                                   RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(10.0))),
