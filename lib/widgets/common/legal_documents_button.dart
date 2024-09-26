@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class LegalDocumentsButton extends StatelessWidget {
+  const LegalDocumentsButton({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Container(
