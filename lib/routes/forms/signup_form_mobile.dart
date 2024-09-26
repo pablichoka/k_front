@@ -133,7 +133,7 @@ class SignUpFormMobileState extends State<SignUpFormMobile> {
                       ),
                       const SizedBox(height: 25),
                       ElevatedButton(
-                        //TODO: check if the inputed data is unique on the DB. Needed endpoint.
+                        //TODO: check if the inputted data is unique on the DB. Needed endpoint.
                         onPressed: () {
                           if (widget.formKey.currentState!.validate()) {
                             _pageController.nextPage(
