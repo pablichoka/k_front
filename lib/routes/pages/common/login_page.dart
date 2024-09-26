@@ -8,6 +8,7 @@ import 'package:k_front/widgets/common/app_bar.dart';
 import 'package:k_front/widgets/common/background_index.dart';
 import 'package:k_front/widgets/common/legal_documents_button.dart';
 import 'package:k_front/utils/device_checker.dart';
+import 'package:k_front/widgets/common/o_auth_buttons.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -117,22 +118,44 @@ class LoginPageState extends State<LoginPage> {
           const BackgroundScreen(),
           Center(
             child: SingleChildScrollView(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(
-                    width: 350,
-                    height: 650,
-                    padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                    decoration: kContainerDecoration.copyWith(
-                      color: Theme.of(context).cardColor
+              child: IntrinsicWidth(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(
+                      width: 350,
+                      height: 500,
+                      padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                      decoration: kContainerDecoration.copyWith(
+                        color: Theme.of(context).cardColor
+                      ),
+                      child: const LoginForm()
                     ),
-                    child: const LoginForm()
-                  ),
-                  const SizedBox(height: 15),
-                  LegalDocumentsButton()
-                ]
+                    const SizedBox(height: 15),
+                    Container(
+                      padding: const EdgeInsets.all(12.0),
+                      decoration: kContainerDecoration.copyWith(
+                        color: Theme.of(context).cardColor
+                      ),
+                      child: Column(
+                        children: [
+                          oAuth2Buttons(
+                            text: 'Login with Google',
+                            icon: Icons.g_translate
+                          ),
+                          const SizedBox(height: 15),
+                          oAuth2Buttons(
+                            text: 'Login with Facebook',
+                            icon: Icons.facebook
+                          )
+                        ]
+                      ),
+                    ),
+                    const SizedBox(height: 15),
+                    LegalDocumentsButton()
+                  ]
+                ),
               )
             )
           )

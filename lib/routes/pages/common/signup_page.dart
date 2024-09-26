@@ -3,6 +3,7 @@ import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:k_front/controller/api_user_controller.dart';
 import 'package:k_front/model/user.dart';
 import 'package:k_front/routes/forms/signup_form.dart';
+import 'package:k_front/routes/forms/signup_form_mobile.dart';
 import 'package:k_front/utils/device_checker.dart';
 import 'package:k_front/widgets/common/legal_documents_button.dart';
 import 'package:k_front/controller/impl/api_user_controller_impl.dart';
@@ -254,12 +255,11 @@ class SignUpPageState extends State<SignUpPage> {
                         color: Theme.of(context).cardColor
                       ),
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 16.0),
+                        padding: const EdgeInsets.all(16.0),
                         child: Column(
                           children: [
                             Form(
-                              key: _formKey,
-                              child: SignUpForm(
+                              child: SignUpFormMobile(
                                 newUser: newUser,
                                 formKey: _formKey,
                                 obscureText: _obscureText,
@@ -268,27 +268,33 @@ class SignUpPageState extends State<SignUpPage> {
                                 phoneController: _phoneController,
                                 number: _number
                               )
-                            ),
-                            const SizedBox(height: 15),
-                            Center(
-                              child: Column(
-                                children: [
-                                  oAuth2Buttons(
-                                    text: 'Sign up with Google',
-                                    icon: Icons.g_translate),
-                                  const SizedBox(height: 10),
-                                  oAuth2Buttons(
-                                    text: 'Sign up with Facebook',
-                                    icon: Icons.facebook)
-                                ]
-                              )
                             )
                           ]
                         )
                       )
                     ),
                     const SizedBox(height: 15),
-                    LegalDocumentsButton()
+                    Center(
+                      child: Container(
+                        padding: const EdgeInsets.all(12.0),
+                        decoration: kContainerDecoration.copyWith(
+                          color: Theme.of(context).cardColor
+                        ),
+                        child: Column(
+                          children: [
+                            oAuth2Buttons(
+                              text: 'Sign up with Google',
+                              icon: Icons.g_translate
+                            ),
+                            const SizedBox(height: 15),
+                            oAuth2Buttons(
+                              text: 'Sign up with Facebook',
+                              icon: Icons.facebook
+                            )
+                          ]
+                        ),
+                      )
+                    )
                   ]
                 )
               )

@@ -10,84 +10,70 @@ Scaffold mobileIndex(BuildContext context) {
   return Scaffold(
     appBar: const DAppBar(
       title: title,
-      returnable: false,
+      returnable: false
     ),
     body: Stack(children: <Widget>[
-      const BackgroundScreen(),
-      Column(children: <Widget>[
-        Center(
-          child: SizedBox(
-              height: MediaQuery.of(context).size.height * 0.7,
-              width: MediaQuery.of(context).size.width,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  SizedBox(
+        const BackgroundScreen(),
+        Column(children: <Widget>[
+            Center(
+              child: SizedBox(
+                height: MediaQuery.of(context).size.height * 0.7,
+                width: MediaQuery.of(context).size.width,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(
                       height: MediaQuery.of(context).size.height * 0.6,
                       width: MediaQuery.of(context).size.width,
                       child: IndexMobileCarrousel(context))
-                ],
-              )),
-        ),
-        SizedBox(
-            height: MediaQuery.of(context).size.height * 0.15,
-            width: MediaQuery.of(context).size.width,
-            child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+                  ]
+                ))
+            ),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.15,
+              width: MediaQuery.of(context).size.width,
+              child: Column(
                 children: <Widget>[
-                  Card(
-                      borderOnForeground: true,
-                      color: Theme.of(context).colorScheme.tertiary,
-                      child: TextButton(
-                          style: ButtonStyle(
-                              padding: WidgetStateProperty.all<EdgeInsets>(
-                                  const EdgeInsets.symmetric(horizontal: 40))),
-                          onPressed: () {
-                            Navigator.push(
-                                context,
-                                PageRouteBuilder(
-                                  pageBuilder:
-                                      (context, animation1, animation2) =>
-                                          const SignUpPage(),
-                                  transitionDuration:
-                                      const Duration(milliseconds: 300),
-                                  transitionsBuilder:
-                                      (context, animation, animation2, child) {
-                                    final offsetAnimation = Tween<Offset>(
-                                            begin: const Offset(1.0, 0.0),
-                                            end: Offset.zero)
-                                        .animate(animation);
-                                    return SlideTransition(
-                                      position: offsetAnimation,
-                                      child: child,
-                                    );
-                                  },
-                                ));
-                          },
-                          child: Text('Sign up',
-                              style:
-                                  Theme.of(context).textTheme.headlineSmall))),
-                  Card(
-                      color: Theme.of(context).colorScheme.primary,
-                      child: TextButton(
-                          style: ButtonStyle(
-                              padding: WidgetStateProperty.all<EdgeInsets>(
-                                  const EdgeInsets.symmetric(horizontal: 40))),
-                          onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => const LoginPage()));
-                          },
-                          child: Text('Log in',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headlineSmall
-                                  ?.copyWith(color: Colors.white))))
+                  ElevatedButton(
+                    style: ButtonStyle(
+                      backgroundColor: WidgetStateProperty.all(Theme.of(context).cardColor),
+                      shape: WidgetStateProperty.all<OutlinedBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0))),
+                      padding: WidgetStateProperty.all<EdgeInsets>(
+                        const EdgeInsets.symmetric(horizontal: 40, vertical: 10)),
+                      minimumSize: WidgetStateProperty.all<Size>(
+                        Size(MediaQuery.of(context).size.width * 0.9, 50))),
+                    onPressed: () {
+                      Navigator.pushNamed(
+                        context,
+                        'signup');
+                    },
+                    child: 
+                    Text('Sign up',
+                      style:
+                      Theme.of(context).textTheme.headlineSmall)),
+                  const SizedBox(height: 10),
+                  ElevatedButton(
+                    style: ButtonStyle(
+                      backgroundColor: WidgetStateProperty.all(Theme.of(context).secondaryHeaderColor),
+                      shape: WidgetStateProperty.all<OutlinedBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0))),
+                      padding: WidgetStateProperty.all<EdgeInsets>(
+                        const EdgeInsets.symmetric(horizontal: 40, vertical: 10)),
+                      minimumSize: WidgetStateProperty.all<Size>(
+                        Size(MediaQuery.of(context).size.width * 0.9, 50))),
+
+                    onPressed: () {
+                      Navigator.pushNamed(context, 'login');
+                    },
+                    child: Text('Log in',
+                      style: Theme.of(context).textTheme.headlineSmall))
                 ]))
-      ]),
-    ]),
+          ])
+      ])
   );
 }
 
