@@ -1,4 +1,4 @@
-import 'package:k_front/models/user.dart';
+import 'package:k_front/model/user.dart';
 
 abstract class ApiUserController {
 

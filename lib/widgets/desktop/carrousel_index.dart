@@ -21,7 +21,7 @@ class IndexDesktopCarouselState extends State<IndexDesktopCarousel> {
         IconButton(
           iconSize: 10,
           onPressed: () {
-            //FIXME: This is just fucking not working
+            //FIXME: This only works when the dots are over the carousel
             _controller.jumpToItem(i);
           },
           icon: Icon(
@@ -37,56 +37,55 @@ class IndexDesktopCarouselState extends State<IndexDesktopCarousel> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        InfiniteCarousel.builder(
-          scrollBehavior: ScrollConfiguration.of(context).copyWith(
-            dragDevices: {
-              // Allows to swipe in web browsers
-              PointerDeviceKind.touch,
-              PointerDeviceKind.mouse
+Widget build(BuildContext context) {
+  return Stack(
+    children: [
+      InfiniteCarousel.builder(
+        scrollBehavior: ScrollConfiguration.of(context).copyWith(
+          dragDevices: {
+            // Allows to swipe in web browsers
+            PointerDeviceKind.touch,
+            PointerDeviceKind.mouse
+          },
+        ),
+        itemCount: 4,
+        itemExtent: MediaQuery.of(context).size.width * 0.6,
+        center: true,
+        anchor: 0.0,
+        velocityFactor: 0.3,
+        onIndexChanged: (index) {
+          _currentIndex.value = index;
+        },
+        controller: _controller,
+        axisDirection: Axis.horizontal,
+        loop: true,
+        itemBuilder: (context, itemIndex, realIndex) {
+          return Card(
+            color: Theme.of(context).primaryColorLight.withOpacity(0.5),
+            child: Center(
+              child: Text('Item $itemIndex',
+                  style: Theme.of(context).textTheme.headlineMedium),
+            ),
+          );
+        },
+      ),
+      Positioned(
+        bottom: MediaQuery.of(context).size.height * 0.025,
+        left: 0,
+        right: 0,
+        child: Center(
+          child: ValueListenableBuilder<int>(
+            valueListenable: _currentIndex,
+            builder: (context, value, child) {
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: indexDots(context, 4, value),
+              );
             },
           ),
-          itemCount: 4,
-          itemExtent: MediaQuery.of(context).size.width * 0.6,
-          center: true,
-          anchor: 0.0,
-          velocityFactor: 0.3,
-          onIndexChanged: (index) {
-            _currentIndex.value = index;
-          },
-          controller: _controller,
-          axisDirection: Axis.horizontal,
-          loop: true,
-          itemBuilder: (context, itemIndex, realIndex) {
-            return Card(
-              color: Theme.of(context).primaryColorLight.withOpacity(0.5),
-              child: Center(
-                child: Text('Item $itemIndex',
-                    style: Theme.of(context).textTheme.headlineMedium),
-              ),
-            );
-          },
         ),
-        Center(
-          child: Container(
-            height: MediaQuery.of(context).size.height * 0.90,
-            transform: Matrix4.translationValues(
-                0, MediaQuery.of(context).size.height * 0.40, 0),
-            child: ValueListenableBuilder<int>(
-              valueListenable: _currentIndex,
-              builder: (context, value, child) {
-                return Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: indexDots(context, 4, value),
-                );
-              },
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-}
+      ),
+    ],
+  );
+}}
