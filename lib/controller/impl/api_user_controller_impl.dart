@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:k_front/controller/api_user_controller.dart';
 
-import '../../models/user.dart';
+import '../../model/user.dart';
 
 class ApiUserControllerImpl implements ApiUserController {
   final String _baseUrl = 'http://localhost:8081';

@@ -39,7 +39,7 @@ class BackgroundPainter extends CustomPainter {
     bottomPath.lineTo(0, size.height);
     bottomPath.close();
 
-    paint.color = Theme.of(context).highlightColor;
+    paint.color = Theme.of(context).colorScheme.secondary;
     canvas.drawPath(bottomPath, paint);
   }
 
