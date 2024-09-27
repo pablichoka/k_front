@@ -3,10 +3,12 @@ import 'package:k_front/routes/home_page.dart';
 import 'package:k_front/routes/menu_builder.dart';
 import 'package:k_front/routes/menu_list.dart';
 import 'package:k_front/routes/profile.dart';
-import 'package:k_front/widgets/common/dashboard_sidebar.dart';
 import 'package:sidebarx/sidebarx.dart';
 
 import '../themes/theme_data.dart';
+
+//TODO: this is a dashboard page for, i.e., desktop view. The dashboard route should 
+//decide whether to show this, the mobile version or the tablet version. Same for rest of the routes.
 
 class Dashboard extends StatefulWidget {
   const Dashboard({super.key});
@@ -61,8 +63,8 @@ class _Dashboard extends State<Dashboard> {
     //     .setExtended(MediaQuery.of(context).size.width > 600 ? true : false);
     return Scaffold(
       body: Row(children: [
-        dashboardSidebar(
-            context, _sidebarController, _currentScreen, _changeScreen),
+        // dashboardSidebar(
+        //     context, _sidebarController, _currentScreen, _changeScreen),
         Expanded(
             child: Center(
           child: _currentScreen,
