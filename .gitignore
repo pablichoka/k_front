@@ -92,3 +92,6 @@ linux/ServiceDefinitions.json
 
 # FVM Version Cache
 .fvm/
+
+# VSCode
+.vscode/
