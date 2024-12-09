@@ -150,7 +150,7 @@ class SignUpPageState extends State<SignUpPage> {
                         ]
                       )
                     ),
-                    LegalDocumentsButton()
+                    const LegalDocumentsButton()
                   ]
                 )
               )
@@ -233,7 +233,7 @@ class SignUpPageState extends State<SignUpPage> {
                     )
                   ),
                   const SizedBox(height: 15),
-                  LegalDocumentsButton()
+                  const LegalDocumentsButton()
                 ]
               )
             )

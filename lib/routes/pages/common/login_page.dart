@@ -62,7 +62,7 @@ class LoginPageState extends State<LoginPage> {
                   child: const LoginForm()
                 ),
                 const SizedBox(height: 15),
-                LegalDocumentsButton()
+                const LegalDocumentsButton()
               ]
             )
           )
@@ -97,7 +97,7 @@ class LoginPageState extends State<LoginPage> {
                     child: const LoginForm()
                   ),
                   const SizedBox(height: 15),
-                  LegalDocumentsButton()
+                  const LegalDocumentsButton()
                 ]
               )
             )
@@ -161,7 +161,7 @@ class LoginPageState extends State<LoginPage> {
                       )
                     ),
                     const SizedBox(height: 15),
-                    LegalDocumentsButton()
+                    const LegalDocumentsButton()
                   ]
                 )
               )
